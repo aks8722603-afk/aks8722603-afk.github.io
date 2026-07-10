@@ -1,1 +1,24 @@
-<!DOCTYPE html><html><body><h1>ثبت نام</h1></body></html>
+<?php
+$host = 'localhost';
+$dbname = 'shop_db';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $stmt = $pdo->prepare("INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)");
+        $stmt->execute([$fullname, $email, $password]);
+
+        echo "ثبت‌نام با موفقیت انجام شد!";
+    }
+} catch(PDOException $e) {
+    echo "خطا: " . $e->getMessage();
+}
+?>
