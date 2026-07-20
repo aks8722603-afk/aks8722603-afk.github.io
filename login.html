@@ -1,58 +1,42 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ورود | بردخون عکس</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود - بردخون عکس</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <header>
+        <div class="logo">📸 بردخون عکس</div>
+        <nav>
+            <a href="index.html">خانه</a>
+            <a href="shop.html">محصولات</a>
+            <a href="cart.html">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
 
-<header>
+    <section class="auth-section">
+        <div class="auth-box">
+            <h2>🔐 ورود به حساب</h2>
+            <p>خوش آمدید! لطفاً وارد شوید</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>ایمیل یا شماره موبایل</label>
+                    <input type="text" id="login-email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>رمز عبور</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;">ورود</button>
+            </form>
+            <p style="margin-top:15px;text-align:center;">
+                حساب ندارید؟ <a href="register.html" style="color:var(--primary);font-weight:700;">ثبت‌نام کنید</a>
+            </p>
+        </div>
+    </section>
 
-<div class="logo">
-<img src="images/logo.png" width="60">
-<h2>بردخون عکس</h2>
-</div>
-
-<nav>
-<a href="index.html">خانه</a>
-<a href="register.html">ثبت نام</a>
-</nav>
-
-</header>
-
-<div class="banner">
-
-<h1>ورود به حساب کاربری</h1>
-
-</div>
-
-<div class="product">
-
-<input type="text" placeholder="شماره موبایل"
-style="width:100%;padding:12px;margin:10px 0;">
-
-<input type="password" placeholder="رمز عبور"
-style="width:100%;padding:12px;margin:10px 0;">
-
-<button style="width:100%;">
-ورود
-</button>
-
-<p style="margin-top:20px;">
-حساب ندارید؟
-<a href="register.html">ثبت نام</a>
-</p>
-
-</div>
-
-<footer>
-
-تمامی حقوق محفوظ است.
-
-</footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
