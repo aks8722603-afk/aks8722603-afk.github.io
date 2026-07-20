@@ -2,14 +2,42 @@
 // لیست محصولات (۴ محصول)
 // ========================
 const products = [
-    { id: 1, name: 'هدفون بی‌سیم سونی', price: 350000, image: '🎧', description: 'کیفیت صدای عالی' },
-    { id: 2, name: 'کیف چرمی دستساز', price: 280000, image: '👝', description: 'چرم طبیعی مرغوب' },
-    { id: 3, name: 'ساعت هوشمند اپل', price: 850000, image: '⌚', description: 'نسخه ۹ سری' },
-    { id: 4, name: 'کتاب خودت باش', price: 45000, image: '📚', description: 'بهترین کتاب انگیزشی سال' }
+    { 
+        id: 1, 
+        name: 'هدفون بی‌سیم سونی', 
+        price: 350000, 
+        image: '🎧', 
+        description: 'کیفیت صدای فراگیر با نویزکنندگی فعال',
+        badge: 'پرفروش'
+    },
+    { 
+        id: 2, 
+        name: 'کیف چرمی دستساز', 
+        price: 280000, 
+        image: '👝', 
+        description: 'چرم طبیعی مرغوب با دوخت نفیس',
+        badge: 'ویژه'
+    },
+    { 
+        id: 3, 
+        name: 'ساعت هوشمند اپل', 
+        price: 850000, 
+        image: '⌚', 
+        description: 'نسخه ۹ سری با صفحه‌ای خیره‌کننده',
+        badge: 'جدید'
+    },
+    { 
+        id: 4, 
+        name: 'کتاب خودت باش', 
+        price: 45000, 
+        image: '📚', 
+        description: 'بهترین کتاب انگیزشی سال ۲۰۲۴',
+        badge: 'تخفیف'
+    }
 ];
 
 // ========================
-// مدیریت سبد خرید با localStorage
+// مدیریت سبد خرید
 // ========================
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -28,26 +56,52 @@ function getProductById(id) {
 }
 
 // ========================
-// افزودن به سبد خرید
+// نوتیفیکیشن پیشرفته
+// ========================
+function showNotification(message, type = 'success') {
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+    
+    const div = document.createElement('div');
+    div.className = `notification ${type}`;
+    div.textContent = message;
+    document.body.appendChild(div);
+    
+    // نمایش با انیمیشن
+    requestAnimationFrame(() => {
+        div.classList.add('show');
+    });
+    
+    setTimeout(() => {
+        div.classList.remove('show');
+        setTimeout(() => div.remove(), 500);
+    }, 3000);
+}
+
+// ========================
+// افزودن به سبد خرید با انیمیشن
 // ========================
 function addToCart(productId) {
     const existing = cart.find(item => item.id === productId);
     if (existing) {
         existing.qty += 1;
+        showNotification(`📦 ${getProductById(productId).name} (${existing.qty} عدد)`, 'success');
     } else {
         cart.push({ id: productId, qty: 1 });
+        showNotification(`✨ ${getProductById(productId).name} به سبد اضافه شد!`, 'success');
     }
     saveCart();
-    showNotification('✅ محصول به سبد خرید اضافه شد!');
 }
 
 // ========================
 // حذف از سبد خرید
 // ========================
 function removeFromCart(productId) {
+    const product = getProductById(productId);
     cart = cart.filter(item => item.id !== productId);
     saveCart();
     renderCart();
+    showNotification(`🗑️ ${product.name} از سبد حذف شد`, 'error');
 }
 
 function changeQty(productId, delta) {
@@ -64,7 +118,7 @@ function changeQty(productId, delta) {
 }
 
 // ========================
-// رندر کردن سبد خرید
+// رندر سبد خرید
 // ========================
 function renderCart() {
     const container = document.getElementById('cart-items');
@@ -73,7 +127,15 @@ function renderCart() {
     if (!container) return;
     
     if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center;padding:30px;">🛒 سبد خرید شما خالی است</p>';
+        container.innerHTML = `
+            <div style="text-align:center;padding:60px 20px;">
+                <div style="font-size:80px;margin-bottom:20px;">🛒</div>
+                <h3 style="color:var(--gray);">سبد خرید شما خالی است</h3>
+                <p style="color:var(--light-gray);">برای خرید به صفحه محصولات بروید</p>
+                <br>
+                <a href="shop.html" class="btn-primary" style="display:inline-block;">مشاهده محصولات</a>
+            </div>
+        `;
         if (totalEl) totalEl.textContent = '۰';
         return;
     }
@@ -90,17 +152,19 @@ function renderCart() {
         html += `
             <div class="cart-item">
                 <div class="item-info">
-                    <span style="font-size:30px;">${product.image}</span>
-                    <div>
+                    <span class="item-image">${product.image}</span>
+                    <div class="item-details">
                         <div class="item-name">${product.name}</div>
                         <div class="item-price">${subtotal.toLocaleString()} تومان</div>
                     </div>
                 </div>
-                <div class="item-qty">
-                    <button onclick="changeQty(${product.id}, -1)">−</button>
-                    <span>${item.qty}</span>
-                    <button onclick="changeQty(${product.id}, 1)">+</button>
-                    <button class="btn-remove" onclick="removeFromCart(${product.id})">🗑️</button>
+                <div class="item-actions">
+                    <div class="qty-control">
+                        <button onclick="changeQty(${product.id}, -1)">−</button>
+                        <span>${item.qty}</span>
+                        <button onclick="changeQty(${product.id}, 1)">+</button>
+                    </div>
+                    <button class="btn-remove" onclick="removeFromCart(${product.id})" title="حذف">✕</button>
                 </div>
             </div>
         `;
@@ -109,15 +173,13 @@ function renderCart() {
     container.innerHTML = html;
     if (totalEl) totalEl.textContent = total.toLocaleString();
     
-    // دکمه پرداخت
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.onclick = () => {
             if (cart.length === 0) {
-                alert('سبد خرید شما خالی است!');
+                showNotification('سبد خرید شما خالی است!', 'error');
                 return;
             }
-            // ذخیره مبلغ برای صفحه پرداخت
             localStorage.setItem('payAmount', total);
             window.location.href = 'payment.html';
         };
@@ -125,7 +187,7 @@ function renderCart() {
 }
 
 // ========================
-// رندر کردن محصولات در صفحه shop.html
+// رندر محصولات
 // ========================
 function renderProducts() {
     const grid = document.getElementById('product-grid');
@@ -135,11 +197,14 @@ function renderProducts() {
     products.forEach(p => {
         html += `
             <div class="product-card">
-                <div style="font-size:60px;padding:20px 0;">${p.image}</div>
+                ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+                <span class="product-image">${p.image}</span>
                 <h3>${p.name}</h3>
-                <p style="color:#7f8c8d;font-size:14px;">${p.description}</p>
-                <div class="price">${p.price.toLocaleString()} تومان</div>
-                <button class="btn-add" onclick="addToCart(${p.id})">➕ افزودن به سبد</button>
+                <p class="description">${p.description}</p>
+                <div class="price">${p.price.toLocaleString()} <span>تومان</span></div>
+                <button class="btn-add" onclick="addToCart(${p.id})">
+                    ➕ افزودن به سبد
+                </button>
             </div>
         `;
     });
@@ -147,54 +212,39 @@ function renderProducts() {
 }
 
 // ========================
-// نوتیفیکیشن ساده
-// ========================
-function showNotification(msg) {
-    const div = document.createElement('div');
-    div.style.cssText = `
-        position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-        background:#2c3e50; color:#fff; padding:15px 30px;
-        border-radius:10px; font-size:16px; z-index:999;
-        box-shadow:0 4px 15px rgba(0,0,0,0.3);
-        animation: slideUp 0.5s ease;
-    `;
-    div.textContent = msg;
-    document.body.appendChild(div);
-    setTimeout(() => div.remove(), 2500);
-}
-
-// ========================
-// اجرای توابع در صفحات مختلف
+// هدر شیشه‌ای با اسکرول
 // ========================
 document.addEventListener('DOMContentLoaded', () => {
+    // اسکرول هدر
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
     updateCartCount();
     renderProducts();
     renderCart();
-    
-    // دکمه پرداخت در cart.html
-    const checkoutBtn = document.getElementById('checkout-btn');
-    if (checkoutBtn) {
-        checkoutBtn.onclick = () => {
-            if (cart.length === 0) {
-                alert('سبد خرید شما خالی است!');
-                return;
-            }
-            const total = cart.reduce((sum, item) => {
-                const p = getProductById(item.id);
-                return sum + (p ? p.price * item.qty : 0);
-            }, 0);
-            localStorage.setItem('payAmount', total);
-            window.location.href = 'payment.html';
-        };
-    }
 });
 
-// استایل انیمیشن برای نوتیفیکیشن
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideUp {
-        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+// ========================
+// اضافه کردن فوتر به همه صفحات
+// ========================
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.querySelector('footer')) {
+        const footer = document.createElement('footer');
+        footer.innerHTML = `
+            <div class="social">
+                <a href="#">📱</a>
+                <a href="#">📧</a>
+                <a href="#">💬</a>
+                <a href="#">📷</a>
+            </div>
+            <p>© ۲۰۲۶ فروشگاه چهارفصل - تمامی حقوق محفوظ است</p>
+        `;
+        document.body.appendChild(footer);
     }
-`;
-document.head.appendChild(style);
+});
