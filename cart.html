@@ -1,1 +1,30 @@
-<!DOCTYPE html><html><body><h1>سبد خرید</h1><script src='js/cart.js'></script></body></html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبد خرید - چهارفصل</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🛍️ چهارفصل</div>
+        <nav>
+            <a href="index.html">خانه</a>
+            <a href="shop.html">محصولات</a>
+            <a href="cart.html">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <section class="cart-section">
+        <h2>سبد خرید</h2>
+        <div id="cart-items"></div>
+        <div id="cart-total">
+            <h3>جمع کل: <span id="total-price">۰</span> تومان</h3>
+            <button id="checkout-btn" class="btn-primary">پرداخت</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
