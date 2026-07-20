@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرداخت - چهارفصل</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">🛍️ چهارفصل</div>
+        <nav>
+            <a href="index.html">خانه</a>
+            <a href="shop.html">محصولات</a>
+            <a href="cart.html">🛒 سبد خرید</a>
+        </nav>
+    </header>
+
+    <section class="payment-section">
+        <h2>✅ درگاه پرداخت</h2>
+        <div class="payment-box">
+            <div class="payment-info">
+                <p>مبلغ قابل پرداخت: <strong id="pay-amount">۰</strong> تومان</p>
+                <p>شماره سفارش: <strong id="order-id">۱۲۳۴۵۶</strong></p>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>روش پرداخت:</h3>
+                <label>
+                    <input type="radio" name="payment" value="zarinpal" checked>
+                    زرین‌پال
+                </label>
+                <label>
+                    <input type="radio" name="payment" value="payping">
+                    پی‌پینگ
+                </label>
+            </div>
+
+            <div class="card-form">
+                <h3>اطلاعات کارت:</h3>
+                <input type="text" placeholder="شماره کارت (۱۶ رقمی)" maxlength="16">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" placeholder="ماه/سال" style="flex:1;">
+                    <input type="text" placeholder="CVV2" style="flex:1;" maxlength="4">
+                </div>
+            </div>
+
+            <button id="pay-btn" class="btn-primary" style="width:100%;">🔐 پرداخت نهایی</button>
+            <div id="payment-result" style="margin-top:20px;"></div>
+        </div>
+    </section>
+
+    <script src="payment.js"></script>
+</body>
+</html>
