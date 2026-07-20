@@ -1,55 +1,63 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پرداخت - چهارفصل</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">🛍️ چهارفصل</div>
-        <nav>
-            <a href="index.html">خانه</a>
-            <a href="shop.html">محصولات</a>
-            <a href="cart.html">🛒 سبد خرید</a>
-        </nav>
-    </header>
-
-    <section class="payment-section">
-        <h2>✅ درگاه پرداخت</h2>
-        <div class="payment-box">
-            <div class="payment-info">
-                <p>مبلغ قابل پرداخت: <strong id="pay-amount">۰</strong> تومان</p>
-                <p>شماره سفارش: <strong id="order-id">۱۲۳۴۵۶</strong></p>
+document.addEventListener('DOMContentLoaded', () => {
+    const amount = parseInt(localStorage.getItem('payAmount')) || 0;
+    document.getElementById('pay-amount').textContent = amount.toLocaleString();
+    
+    // شماره سفارش تصادفی
+    document.getElementById('order-id').textContent = Math.floor(100000 + Math.random() * 900000);
+    
+    const payBtn = document.getElementById('pay-btn');
+    const resultDiv = document.getElementById('payment-result');
+    
+    payBtn.addEventListener('click', () => {
+        // =====================================================
+        // 🚀 اینجا محل اتصال به درگاه واقعی است
+        // برای اتصال به زرین‌پال واقعی، این بخش را جایگزین کنید
+        // =====================================================
+        
+        // شبیه‌سازی پرداخت (Sandbox)
+        resultDiv.innerHTML = `
+            <div style="text-align:center;padding:20px;">
+                <div style="font-size:50px;">⏳</div>
+                <p>در حال اتصال به درگاه زرین‌پال...</p>
             </div>
+        `;
+        resultDiv.className = '';
+        
+        // شبیه‌سازی تاخیر شبکه
+        setTimeout(() => {
+            // ۹۰٪ احتمال موفقیت برای شبیه‌سازی
+            const isSuccess = Math.random() < 0.9;
             
-            <div class="payment-methods">
-                <h3>روش پرداخت:</h3>
-                <label>
-                    <input type="radio" name="payment" value="zarinpal" checked>
-                    زرین‌پال
-                </label>
-                <label>
-                    <input type="radio" name="payment" value="payping">
-                    پی‌پینگ
-                </label>
-            </div>
-
-            <div class="card-form">
-                <h3>اطلاعات کارت:</h3>
-                <input type="text" placeholder="شماره کارت (۱۶ رقمی)" maxlength="16">
-                <div style="display:flex; gap:10px;">
-                    <input type="text" placeholder="ماه/سال" style="flex:1;">
-                    <input type="text" placeholder="CVV2" style="flex:1;" maxlength="4">
-                </div>
-            </div>
-
-            <button id="pay-btn" class="btn-primary" style="width:100%;">🔐 پرداخت نهایی</button>
-            <div id="payment-result" style="margin-top:20px;"></div>
-        </div>
-    </section>
-
-    <script src="payment.js"></script>
-</body>
-</html>
+            if (isSuccess) {
+                resultDiv.innerHTML = `
+                    <div style="text-align:center;padding:20px;">
+                        <div style="font-size:60px;">✅</div>
+                        <h3>پرداخت با موفقیت انجام شد!</h3>
+                        <p>شماره پیگیری: ${Math.floor(100000000 + Math.random() * 900000000)}</p>
+                        <p style="color:#7f8c8d;font-size:14px;">ایمیل تأیید برای شما ارسال شد.</p>
+                        <br>
+                        <a href="index.html" class="btn-primary">بازگشت به صفحه اصلی</a>
+                    </div>
+                `;
+                resultDiv.className = 'success';
+                // خالی کردن سبد خرید
+                localStorage.removeItem('cart');
+                localStorage.removeItem('payAmount');
+                // آپدیت شمارنده سبد
+                document.querySelectorAll('#cart-count').forEach(el => el.textContent = '0');
+            } else {
+                resultDiv.innerHTML = `
+                    <div style="text-align:center;padding:20px;">
+                        <div style="font-size:60px;">❌</div>
+                        <h3>پرداخت ناموفق!</h3>
+                        <p>خطا در ارتباط با درگاه بانکی</p>
+                        <p style="color:#7f8c8d;font-size:14px;">لطفاً دوباره تلاش کنید.</p>
+                        <br>
+                        <button onclick="location.reload()" class="btn-primary">تلاش مجدد</button>
+                    </div>
+                `;
+                resultDiv.className = 'error';
+            }
+        }, 2000);
+    });
+});
