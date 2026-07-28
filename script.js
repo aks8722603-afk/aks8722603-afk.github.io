@@ -1,6 +1,6 @@
-// ========================
-// لیست محصولات (۴ محصول)
-// ========================
+// ============================================
+// لیست محصولات
+// ============================================
 const products = [
     { 
         id: 1, 
@@ -36,9 +36,9 @@ const products = [
     }
 ];
 
-// ========================
+// ============================================
 // مدیریت سبد خرید
-// ========================
+// ============================================
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -59,9 +59,9 @@ function getProductById(id) {
     return products.find(p => p.id === id);
 }
 
-// ========================
+// ============================================
 // نوتیفیکیشن
-// ========================
+// ============================================
 function showNotification(message, type = 'success') {
     const existing = document.querySelector('.notification');
     if (existing) existing.remove();
@@ -101,11 +101,11 @@ function showNotification(message, type = 'success') {
     }, 3500);
 }
 
-// ========================
-// افزودن به سبد خرید
-// ========================
+// ============================================
+// ✅ افزودن به سبد خرید (مهم)
+// ============================================
 function addToCart(productId) {
-    console.log('افزودن محصول:', productId); // برای دیباگ
+    console.log('📦 افزودن محصول:', productId);
     
     const product = getProductById(productId);
     if (!product) {
@@ -121,14 +121,12 @@ function addToCart(productId) {
     }
     saveCart();
     showNotification(`✅ ${product.name} به سبد اضافه شد!`);
-    
-    // آپدیت تعداد سبد
     updateCartCount();
 }
 
-// ========================
+// ============================================
 // حذف از سبد خرید
-// ========================
+// ============================================
 function removeFromCart(productId) {
     const product = getProductById(productId);
     cart = cart.filter(item => item.id !== productId);
@@ -150,9 +148,9 @@ function changeQty(productId, delta) {
     }
 }
 
-// ========================
+// ============================================
 // رندر سبد خرید
-// ========================
+// ============================================
 function renderCart() {
     const container = document.getElementById('cart-items');
     const totalEl = document.getElementById('total-price');
@@ -224,17 +222,17 @@ function renderCart() {
     }
 }
 
-// ========================
+// ============================================
 // رندر محصولات
-// ========================
+// ============================================
 function renderProducts() {
     const grid = document.getElementById('product-grid');
     if (!grid) {
-        console.log('product-grid پیدا نشد');
+        console.log('⚠️ product-grid پیدا نشد');
         return;
     }
     
-    console.log('رندر محصولات...');
+    console.log('🔄 رندر محصولات...');
     let html = '';
     products.forEach(p => {
         html += `
@@ -251,12 +249,12 @@ function renderProducts() {
         `;
     });
     grid.innerHTML = html;
-    console.log('محصولات رندر شدند');
+    console.log('✅ محصولات رندر شدند');
 }
 
-// ========================
+// ============================================
 // سیستم احراز هویت
-// ========================
+// ============================================
 function handleRegister(e) {
     e.preventDefault();
     const name = document.getElementById('reg-name');
@@ -353,12 +351,13 @@ function logout() {
     setTimeout(() => window.location.href = 'index.html', 1000);
 }
 
-// ========================
-// هدر شیشه‌ای با اسکرول
-// ========================
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('صفحه بارگذاری شد!');
+// ============================================
+// 🚀 اجرا در زمان بارگذاری
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ صفحه بارگذاری شد!');
     
+    // هدر اسکرول
     window.addEventListener('scroll', () => {
         const header = document.querySelector('header');
         if (header) {
@@ -370,20 +369,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // بروزرسانی سبد
     updateCartCount();
+    
+    // رندر محصولات
     renderProducts();
+    
+    // رندر سبد خرید
     renderCart();
     
+    // ثبت‌نام
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', handleRegister);
     }
     
+    // ورود
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
 
+    // کاربر فعلی
     if (currentUser) {
         document.querySelectorAll('.btn-login').forEach(el => {
             el.textContent = `👤 ${currentUser.name}`;
