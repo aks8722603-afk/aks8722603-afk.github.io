@@ -67,7 +67,6 @@ function showNotification(message, type = 'success') {
     if (existing) existing.remove();
     
     const div = document.createElement('div');
-    div.className = `notification ${type}`;
     div.textContent = message;
     div.style.cssText = `
         position: fixed;
@@ -81,11 +80,12 @@ function showNotification(message, type = 'success') {
         font-weight: 500;
         z-index: 9999;
         opacity: 0;
-        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: all 0.5s ease;
         box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         font-size: 16px;
         max-width: 90%;
         text-align: center;
+        font-family: 'Vazirmatn', 'Tahoma', sans-serif;
     `;
     document.body.appendChild(div);
     
@@ -102,10 +102,10 @@ function showNotification(message, type = 'success') {
 }
 
 // ============================================
-// ✅ افزودن به سبد خرید (مهم)
+// ✅ افزودن به سبد خرید (تابع اصلی)
 // ============================================
 function addToCart(productId) {
-    console.log('📦 افزودن محصول:', productId);
+    console.log('📦 کلیک شد - محصول:', productId);
     
     const product = getProductById(productId);
     if (!product) {
@@ -161,8 +161,8 @@ function renderCart() {
         container.innerHTML = `
             <div style="text-align:center;padding:60px 20px;">
                 <div style="font-size:70px;margin-bottom:15px;">🛒</div>
-                <h3 style="color:var(--gray);">سبد خرید خالی است</h3>
-                <p style="color:var(--light-gray);">به صفحه محصولات بروید</p>
+                <h3 style="color:#636E72;">سبد خرید خالی است</h3>
+                <p style="color:#b0b0b0;">به صفحه محصولات بروید</p>
                 <br>
                 <a href="shop.html" class="btn-primary" style="display:inline-block;">مشاهده محصولات</a>
             </div>
