@@ -6,9 +6,8 @@
     <title>پنل مدیریت - بردخون عکس</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* استایل پنل مدیریت */
         .admin-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 120px auto 60px;
             padding: 0 20px;
         }
@@ -37,13 +36,13 @@
         }
         .stat-card {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
         .stat-item {
             background: linear-gradient(135deg, #f8f9fe, #e8ecff);
-            padding: 25px 20px;
+            padding: 20px;
             border-radius: 15px;
             text-align: center;
             transition: 0.3s;
@@ -53,7 +52,7 @@
             box-shadow: 0 8px 25px rgba(108, 99, 255, 0.15);
         }
         .stat-item .number {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 900;
             color: #6C63FF;
         }
@@ -63,7 +62,7 @@
             margin-top: 5px;
         }
         .stat-item .icon {
-            font-size: 30px;
+            font-size: 28px;
             display: block;
             margin-bottom: 5px;
         }
@@ -75,6 +74,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .user-list h3 {
             font-size: 20px;
@@ -103,6 +104,7 @@
             color: #fff;
             padding: 12px 15px;
             text-align: right;
+            white-space: nowrap;
         }
         .user-list th:first-child {
             border-radius: 0 10px 0 0;
@@ -113,6 +115,7 @@
         .user-list td {
             padding: 12px 15px;
             border-bottom: 1px solid #DFE6E9;
+            vertical-align: middle;
         }
         .user-list tr:hover td {
             background: #f8f9fe;
@@ -170,6 +173,18 @@
             padding: 14px;
             font-size: 17px;
             margin-top: 5px;
+            background: linear-gradient(135deg, #6C63FF, #5a52d5);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 30px rgba(108, 99, 255, 0.35);
+        }
+        .admin-login .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(108, 99, 255, 0.5);
         }
         .admin-login .error-msg {
             color: #E74C3C;
@@ -213,6 +228,49 @@
             font-size: 13px;
             margin-right: 5px;
         }
+        .password-cell {
+            font-family: monospace;
+            color: #E74C3C;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: all;
+        }
+        .password-cell .hidden-pass {
+            color: #636E72;
+            font-weight: 400;
+            font-family: inherit;
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 8px;
+            border-radius: 5px;
+            transition: 0.3s;
+            color: #6C63FF;
+        }
+        .copy-btn:hover {
+            background: #e8ecff;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ECC71;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: 0.4s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .toast.show {
+            opacity: 1;
+        }
         @media (max-width: 600px) {
             .admin-box {
                 padding: 20px;
@@ -222,7 +280,7 @@
                 gap: 12px;
             }
             .stat-item .number {
-                font-size: 28px;
+                font-size: 24px;
             }
             .admin-login {
                 margin: 80px 15px;
@@ -230,7 +288,6 @@
             }
             .user-list .list-header {
                 flex-direction: column;
-                gap: 10px;
             }
             .user-list .search-box {
                 width: 100%;
@@ -238,6 +295,10 @@
             .admin-actions {
                 flex-direction: column;
                 align-items: center;
+            }
+            .user-list th, .user-list td {
+                padding: 8px 10px;
+                font-size: 12px;
             }
         }
         @media (max-width: 400px) {
@@ -302,11 +363,13 @@
                 </div>
             </div>
 
-            <!-- لیست کاربران -->
+            <!-- لیست کاربران با رمز -->
             <div class="user-list">
                 <div class="list-header">
                     <h3>👥 لیست کاربران <span class="badge-count" id="user-count-badge">۰</span></h3>
-                    <input type="text" class="search-box" id="search-users" placeholder="🔍 جستجوی کاربر..." onkeyup="filterUsers()">
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <input type="text" class="search-box" id="search-users" placeholder="🔍 جستجوی کاربر..." onkeyup="filterUsers()">
+                    </div>
                 </div>
                 <div class="table-wrap">
                     <div id="user-list-container">
@@ -340,14 +403,15 @@
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
     <script>
         // ============================================
         // 🔐 تنظیمات پنل مدیریت
         // ============================================
-        
-        // ⚠️ رمز عبور مدیریت را تغییر دهید!
-        const ADMIN_PASSWORD = 'hb2603123';
-        
+        const ADMIN_PASSWORD = 'admin123';
+
         // ============================================
         // 📦 مدیریت سبد خرید
         // ============================================
@@ -398,39 +462,32 @@
         // ============================================
         function refreshData() {
             loadAdminData();
-            showNotification('✅ داده‌ها بروزرسانی شدند!');
+            showToast('✅ داده‌ها بروزرسانی شدند!');
         }
 
         // ============================================
         // 📊 بارگذاری اطلاعات مدیریت
         // ============================================
         function loadAdminData() {
-            // دریافت لیست کاربران
             const users = JSON.parse(localStorage.getItem('users')) || [];
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
             
-            // نمایش تعداد کاربران
             document.getElementById('total-users').textContent = users.length;
             document.getElementById('user-count-badge').textContent = users.length;
-
-            // نمایش تعداد سفارشات
             document.getElementById('total-orders').textContent = orders.length;
             
-            // محاسبه مجموع فروش
             const totalRevenue = orders.reduce((sum, order) => sum + (order.amount || 0), 0);
             document.getElementById('total-revenue').textContent = totalRevenue.toLocaleString() + ' تومان';
 
-            // نمایش لیست کاربران
             renderUserList(users);
 
-            // بروزرسانی زمان
             const now = new Date();
             document.getElementById('last-update').textContent = 
                 now.toLocaleDateString('fa-IR') + ' - ' + now.toLocaleTimeString('fa-IR');
         }
 
         // ============================================
-        // 👥 رندر لیست کاربران
+        // 👥 رندر لیست کاربران با نمایش رمز
         // ============================================
         function renderUserList(users) {
             const container = document.getElementById('user-list-container');
@@ -440,7 +497,6 @@
                     <div class="empty-state">
                         <span class="big-icon">👤</span>
                         <p>هنوز کاربری ثبت‌نام نکرده است!</p>
-                        <p style="font-size:13px;color:#b0b0b0;">به محض ثبت‌نام اولین کاربر، اینجا نمایش داده می‌شود.</p>
                     </div>
                 `;
                 return;
@@ -450,10 +506,11 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width:50px;">#</th>
+                            <th style="width:40px;">#</th>
                             <th>نام و نام خانوادگی</th>
                             <th>شماره موبایل</th>
                             <th>ایمیل</th>
+                            <th style="min-width:120px;">🔑 رمز عبور</th>
                             <th style="width:80px;">تاریخ</th>
                         </tr>
                     </thead>
@@ -462,12 +519,20 @@
             
             users.forEach((user, index) => {
                 const date = user.date ? new Date(user.date).toLocaleDateString('fa-IR') : '—';
+                const passId = `pass-${index}`;
+                
                 html += `
                     <tr class="user-row" data-name="${user.name.toLowerCase()}" data-phone="${user.phone}">
                         <td>${index + 1}</td>
                         <td><strong>${user.name}</strong></td>
                         <td>${user.phone}</td>
                         <td>${user.email || '—'}</td>
+                        <td>
+                            <span class="password-cell" id="${passId}" onclick="copyPassword('${user.password}')" title="برای کپی کلیک کنید">
+                                ${user.password}
+                            </span>
+                            <button class="copy-btn" onclick="copyPassword('${user.password}')" title="کپی رمز">📋</button>
+                        </td>
                         <td>${date}</td>
                     </tr>
                 `;
@@ -475,6 +540,24 @@
             
             html += `</tbody></table>`;
             container.innerHTML = html;
+        }
+
+        // ============================================
+        // 📋 کپی کردن رمز عبور
+        // ============================================
+        function copyPassword(password) {
+            navigator.clipboard.writeText(password).then(() => {
+                showToast('✅ رمز عبور کپی شد!');
+            }).catch(() => {
+                // روش جایگزین برای مرورگرهای قدیمی
+                const input = document.createElement('input');
+                input.value = password;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToast('✅ رمز عبور کپی شد!');
+            });
         }
 
         // ============================================
@@ -496,45 +579,16 @@
         }
 
         // ============================================
-        // 📢 نوتیفیکیشن
+        // 📢 Toast Notification
         // ============================================
-        function showNotification(message) {
-            const existing = document.querySelector('.admin-notification');
-            if (existing) existing.remove();
-            
-            const div = document.createElement('div');
-            div.className = 'admin-notification';
-            div.textContent = message;
-            div.style.cssText = `
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%) translateY(100px);
-                background: #2ECC71;
-                color: #fff;
-                padding: 15px 35px;
-                border-radius: 15px;
-                font-weight: 500;
-                z-index: 9999;
-                opacity: 0;
-                transition: all 0.5s ease;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-                font-size: 16px;
-                max-width: 90%;
-                text-align: center;
-            `;
-            document.body.appendChild(div);
-            
-            requestAnimationFrame(() => {
-                div.style.opacity = '1';
-                div.style.transform = 'translateX(-50%) translateY(0)';
-            });
-            
-            setTimeout(() => {
-                div.style.opacity = '0';
-                div.style.transform = 'translateX(-50%) translateY(100px)';
-                setTimeout(() => div.remove(), 500);
-            }, 3000);
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.className = 'toast';
+            }, 2500);
         }
 
         // ============================================
@@ -543,33 +597,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateCartCount();
             
-            // اگر قبلاً وارد شده بودید
             if (sessionStorage.getItem('adminLoggedIn') === 'true') {
                 document.getElementById('admin-login').style.display = 'none';
                 document.getElementById('admin-panel').classList.remove('hidden');
                 loadAdminData();
             }
 
-            // ورود با کلید Enter
             document.getElementById('admin-password').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     checkAdminLogin();
                 }
             });
         });
-
-        // ============================================
-        // 📝 افزودن تاریخ به کاربران جدید
-        // ============================================
-        // این بخش را به register.html اضافه کنید
-        // هنگام ثبت‌نام، تاریخ را ذخیره کنید:
-        // const newUser = { 
-        //     name: nameVal, 
-        //     phone: phoneVal, 
-        //     email: emailVal, 
-        //     password: passwordVal,
-        //     date: new Date().toISOString()
-        // };
     </script>
 </body>
 </html>
