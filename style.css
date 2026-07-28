@@ -1229,3 +1229,21 @@ footer .social a:hover {
         padding: 4px 12px !important;
     }
 }
+    .btn-admin {
+    background: linear-gradient(135deg, #FF6584, #FF4757) !important;
+    color: #fff !important;
+    padding: 8px 18px !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
+}
+
+.btn-admin:hover {
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
+}
+
+.btn-admin::after {
+    display: none !important;
+}
