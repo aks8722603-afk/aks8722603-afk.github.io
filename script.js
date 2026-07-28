@@ -69,11 +69,34 @@ function showNotification(message, type = 'success') {
     const div = document.createElement('div');
     div.className = `notification ${type}`;
     div.textContent = message;
+    div.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: ${type === 'error' ? '#E74C3C' : '#2ECC71'};
+        color: #fff;
+        padding: 15px 35px;
+        border-radius: 15px;
+        font-weight: 500;
+        z-index: 9999;
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        font-size: 16px;
+        max-width: 90%;
+        text-align: center;
+    `;
     document.body.appendChild(div);
     
-    requestAnimationFrame(() => div.classList.add('show'));
+    requestAnimationFrame(() => {
+        div.style.opacity = '1';
+        div.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    
     setTimeout(() => {
-        div.classList.remove('show');
+        div.style.opacity = '0';
+        div.style.transform = 'translateX(-50%) translateY(100px)';
         setTimeout(() => div.remove(), 500);
     }, 3500);
 }
@@ -82,6 +105,14 @@ function showNotification(message, type = 'success') {
 // افزودن به سبد خرید
 // ========================
 function addToCart(productId) {
+    console.log('افزودن محصول:', productId); // برای دیباگ
+    
+    const product = getProductById(productId);
+    if (!product) {
+        showNotification('❌ محصول یافت نشد!', 'error');
+        return;
+    }
+    
     const existing = cart.find(item => item.id === productId);
     if (existing) {
         existing.qty += 1;
@@ -89,7 +120,10 @@ function addToCart(productId) {
         cart.push({ id: productId, qty: 1 });
     }
     saveCart();
-    showNotification(`✅ ${getProductById(productId).name} به سبد اضافه شد!`);
+    showNotification(`✅ ${product.name} به سبد اضافه شد!`);
+    
+    // آپدیت تعداد سبد
+    updateCartCount();
 }
 
 // ========================
@@ -195,8 +229,12 @@ function renderCart() {
 // ========================
 function renderProducts() {
     const grid = document.getElementById('product-grid');
-    if (!grid) return;
+    if (!grid) {
+        console.log('product-grid پیدا نشد');
+        return;
+    }
     
+    console.log('رندر محصولات...');
     let html = '';
     products.forEach(p => {
         html += `
@@ -213,6 +251,7 @@ function renderProducts() {
         `;
     });
     grid.innerHTML = html;
+    console.log('محصولات رندر شدند');
 }
 
 // ========================
@@ -257,7 +296,13 @@ function handleRegister(e) {
         return;
     }
 
-    const newUser = { name: nameVal, phone: phoneVal, email: emailVal, password: passwordVal };
+    const newUser = { 
+        name: nameVal, 
+        phone: phoneVal, 
+        email: emailVal, 
+        password: passwordVal,
+        date: new Date().toISOString()
+    };
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
     
@@ -312,6 +357,8 @@ function logout() {
 // هدر شیشه‌ای با اسکرول
 // ========================
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('صفحه بارگذاری شد!');
+    
     window.addEventListener('scroll', () => {
         const header = document.querySelector('header');
         if (header) {
