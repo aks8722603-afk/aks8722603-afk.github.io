@@ -22,6 +22,29 @@
         .btn-admin::after {
             display: none !important;
         }
+        .products-section {
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+        }
+        .products-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .products-header h2 {
+            font-size: 36px;
+            font-weight: 900;
+        }
+        .products-header h2 span {
+            background: linear-gradient(135deg, #6C63FF, #FF6584);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .products-header p {
+            color: #636E72;
+            font-size: 17px;
+        }
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -98,7 +121,7 @@
         .btn-add:active {
             transform: scale(0.95);
         }
-        /* استایل فوتر با نمادها */
+        /* استایل فوتر */
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -152,6 +175,23 @@
                 height: 35px;
                 padding: 2px 5px;
             }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ECC71;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 15px;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            font-size: 16px;
         }
     </style>
 </head>
@@ -167,10 +207,10 @@
         </nav>
     </header>
 
-    <section class="products" style="max-width:1200px;margin:120px auto 60px;padding:0 20px;">
-        <div class="products-header" style="text-align:center;margin-bottom:40px;">
-            <h2 style="font-size:36px;font-weight:900;">🛍️ محصولات <span style="background:linear-gradient(135deg,#6C63FF,#FF6584);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">بردخون عکس</span></h2>
-            <p style="color:#636E72;font-size:17px;">۴ محصول ویژه با کیفیت عالی</p>
+    <section class="products-section">
+        <div class="products-header">
+            <h2>🛍️ محصولات <span>بردخون عکس</span></h2>
+            <p>۴ محصول ویژه با کیفیت عالی</p>
         </div>
         <div class="product-grid" id="product-grid">
             <!-- محصولات توسط جاوااسکریپت پر می‌شوند -->
@@ -186,7 +226,6 @@
                 <a href="#">📷</a>
             </div>
             
-            <!-- نماد اینماد -->
             <div class="trust-badges">
                 <div class="badge-item">
                     <a href="https://trustseal.enamad.ir/?id=YOUR_CODE_HERE" target="_blank">
@@ -200,7 +239,7 @@
     </footer>
 
     <!-- ============================================ -->
-    <!-- ✅ کد جاوااسکریپت مستقیماً در همین فایل     -->
+    <!-- کد جاوااسکریپت (همان کد تست)                -->
     <!-- ============================================ -->
     <script>
         // ============================================
@@ -242,7 +281,7 @@
         ];
 
         // ============================================
-        // مدیریت سبد خرید
+        // سبد خرید
         // ============================================
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -266,30 +305,12 @@
         // نوتیفیکیشن
         // ============================================
         function showNotification(message) {
-            // حذف نوتیفیکیشن قبلی
-            const old = document.querySelector('.custom-notification');
+            const old = document.querySelector('.notification');
             if (old) old.remove();
             
             const div = document.createElement('div');
-            div.className = 'custom-notification';
+            div.className = 'notification';
             div.textContent = message;
-            div.style.cssText = `
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #2ECC71;
-                color: #fff;
-                padding: 15px 35px;
-                border-radius: 15px;
-                font-weight: 500;
-                z-index: 9999;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-                font-size: 16px;
-                max-width: 90%;
-                text-align: center;
-                font-family: 'Vazirmatn', 'Tahoma', sans-serif;
-            `;
             document.body.appendChild(div);
             setTimeout(() => div.remove(), 3000);
         }
@@ -302,7 +323,7 @@
             
             const product = getProductById(productId);
             if (!product) {
-                alert('❌ محصول یافت نشد!');
+                showNotification('❌ محصول یافت نشد!');
                 return;
             }
             
@@ -312,9 +333,9 @@
             } else {
                 cart.push({ id: productId, qty: 1 });
             }
+            
             saveCart();
             showNotification(`✅ ${product.name} به سبد اضافه شد!`);
-            updateCartCount();
         }
 
         // ============================================
