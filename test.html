@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست - بردخون عکس</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: #f5f7ff;
+            direction: rtl;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #6C63FF;
+        }
+        .product {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .product:hover {
+            border-color: #6C63FF;
+            box-shadow: 0 5px 20px rgba(108, 99, 255, 0.15);
+        }
+        .product .icon {
+            font-size: 50px;
+        }
+        .product .name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 10px 0 5px;
+        }
+        .product .price {
+            font-size: 22px;
+            color: #6C63FF;
+            font-weight: 900;
+        }
+        .btn-add {
+            background: #2ECC71;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-add:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+        }
+        .btn-add:active {
+            transform: scale(0.95);
+        }
+        #cart-info {
+            background: #6C63FF;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        #cart-info span {
+            background: #FF6584;
+            padding: 2px 15px;
+            border-radius: 50px;
+            margin-right: 10px;
+        }
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ECC71;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 15px;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            font-size: 16px;
+        }
+        .log {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 13px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log p {
+            margin: 5px 0;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .log .success {
+            color: #2ECC71;
+        }
+        .log .error {
+            color: #E74C3C;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 تست فروشگاه بردخون عکس</h1>
+        
+        <div id="cart-info">
+            🛒 تعداد محصولات در سبد: <span id="cart-count">0</span>
+        </div>
+
+        <div id="products">
+            <!-- محصولات توسط جاوااسکریپت پر می‌شوند -->
+        </div>
+
+        <div class="log" id="log">
+            <p>📋 لاگ فعالیت‌ها:</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // لیست محصولات
+        // ============================================
+        const products = [
+            { id: 1, name: 'فلش مموری ۳۲ گیگ', price: 180000, icon: '💾' },
+            { id: 2, name: 'فلش مموری ۶۴ گیگ', price: 290000, icon: '💿' },
+            { id: 3, name: 'قاب عکس ۲۱×۱۶', price: 85000, icon: '🖼️' },
+            { id: 4, name: 'قاب عکس ۲۰×۳۰', price: 120000, icon: '🖼️' }
+        ];
+
+        // ============================================
+        // سبد خرید
+        // ============================================
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateUI();
+        }
+
+        function updateUI() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').textContent = count;
+            addLog(`🔄 بروزرسانی سبد: ${count} محصول`, 'info');
+        }
+
+        function getProductById(id) {
+            return products.find(p => p.id === id);
+        }
+
+        // ============================================
+        // لاگ (گزارش)
+        // ============================================
+        function addLog(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            if (type === 'success') p.style.color = '#2ECC71';
+            else if (type === 'error') p.style.color = '#E74C3C';
+            else p.style.color = '#636E72';
+            logDiv.appendChild(p);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // ============================================
+        // نوتیفیکیشن
+        // ============================================
+        function showNotification(message) {
+            const old = document.querySelector('.notification');
+            if (old) old.remove();
+            
+            const div = document.createElement('div');
+            div.className = 'notification';
+            div.textContent = message;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 3000);
+        }
+
+        // ============================================
+        // ✅ افزودن به سبد خرید
+        // ============================================
+        function addToCart(productId) {
+            addLog(`📦 کلیک روی محصول با ID: ${productId}`, 'info');
+            
+            const product = getProductById(productId);
+            if (!product) {
+                addLog(`❌ محصول با ID ${productId} پیدا نشد!`, 'error');
+                showNotification('❌ محصول یافت نشد!');
+                return;
+            }
+            
+            addLog(`✅ محصول پیدا شد: ${product.name}`, 'success');
+            
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+                addLog(`➕ تعداد ${product.name} افزایش یافت: ${existing.qty}`, 'success');
+            } else {
+                cart.push({ id: productId, qty: 1 });
+                addLog(`➕ ${product.name} به سبد اضافه شد`, 'success');
+            }
+            
+            saveCart();
+            showNotification(`✅ ${product.name} به سبد اضافه شد!`);
+        }
+
+        // ============================================
+        // رندر محصولات
+        // ============================================
+        function renderProducts() {
+            addLog('🔄 شروع رندر محصولات...', 'info');
+            
+            const container = document.getElementById('products');
+            if (!container) {
+                addLog('❌ المنت products پیدا نشد!', 'error');
+                return;
+            }
+            
+            let html = '';
+            products.forEach(p => {
+                html += `
+                    <div class="product">
+                        <div class="icon">${p.icon}</div>
+                        <div class="name">${p.name}</div>
+                        <div class="price">${p.price.toLocaleString()} تومان</div>
+                        <button class="btn-add" onclick="addToCart(${p.id})">
+                            ➕ افزودن به سبد
+                        </button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            addLog(`✅ ${products.length} محصول رندر شدند`, 'success');
+        }
+
+        // ============================================
+        // 🚀 اجرا
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 صفحه تست بارگذاری شد!', 'info');
+            renderProducts();
+            updateUI();
+            addLog('✅ همه چیز آماده است!', 'success');
+        });
+    </script>
+</body>
+</html>
