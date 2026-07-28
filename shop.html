@@ -22,6 +22,84 @@
         .btn-admin::after {
             display: none !important;
         }
+        
+        /* استایل محصولات */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.15);
+        }
+        .product-card .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #FF6584, #FF4757);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .product-card .product-image {
+            font-size: 70px;
+            display: block;
+            margin: 10px 0;
+        }
+        .product-card h3 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #2D3436;
+        }
+        .product-card .description {
+            color: #636E72;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .product-card .price {
+            font-size: 24px;
+            font-weight: 900;
+            color: #6C63FF;
+            margin: 15px 0;
+        }
+        .product-card .price span {
+            font-size: 14px;
+            font-weight: 400;
+            color: #636E72;
+        }
+        .btn-add {
+            background: linear-gradient(135deg, #2ECC71, #27ae60);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        .btn-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
+        }
+        .btn-add:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -36,10 +114,10 @@
         </nav>
     </header>
 
-    <section class="products">
-        <div class="products-header">
-            <h2>🛍️ محصولات <span>بردخون عکس</span></h2>
-            <p>۴ محصول ویژه با کیفیت عالی</p>
+    <section class="products" style="max-width:1200px;margin:120px auto 60px;padding:0 20px;">
+        <div class="products-header" style="text-align:center;margin-bottom:40px;">
+            <h2 style="font-size:36px;font-weight:900;">🛍️ محصولات <span style="background:linear-gradient(135deg,#6C63FF,#FF6584);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">بردخون عکس</span></h2>
+            <p style="color:#636E72;font-size:17px;">۴ محصول ویژه با کیفیت عالی</p>
         </div>
         <div class="product-grid" id="product-grid">
             <!-- محصولات توسط جاوااسکریپت پر می‌شوند -->
@@ -56,6 +134,34 @@
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
+    <!-- ============================================ -->
+    <!-- IMPORTANT: script.js باید در انتها لینک شود -->
+    <!-- ============================================ -->
     <script src="script.js"></script>
+    
+    <!-- ============================================ -->
+    <!-- کد اضافی برای اطمینان از کارکرد دکمه‌ها      -->
+    <!-- ============================================ -->
+    <script>
+        // این کد بعد از بارگذاری script.js اجرا می‌شود
+        console.log('✅ shop.html بارگذاری شد');
+        
+        // بررسی اینکه آیا تابع addToCart وجود دارد
+        if (typeof addToCart === 'function') {
+            console.log('✅ تابع addToCart پیدا شد');
+        } else {
+            console.log('❌ تابع addToCart پیدا نشد!');
+        }
+        
+        // اگر محصولات رندر نشدند، دوباره رندر کن
+        setTimeout(function() {
+            if (document.getElementById('product-grid').children.length === 0) {
+                console.log('🔄 رندر مجدد محصولات...');
+                if (typeof renderProducts === 'function') {
+                    renderProducts();
+                }
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
