@@ -98,6 +98,61 @@
         .btn-add:active {
             transform: scale(0.95);
         }
+        /* استایل فوتر با نمادها */
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        .badge-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .badge-item:hover {
+            transform: translateY(-5px);
+            filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.1));
+        }
+        .badge-item img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .trust-badges {
+                gap: 15px;
+                padding: 10px;
+            }
+            .badge-item img {
+                height: 45px;
+                padding: 3px 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            .trust-badges {
+                gap: 10px;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .badge-item img {
+                height: 35px;
+                padding: 2px 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,17 +178,29 @@
     </section>
 
     <footer>
-        <div class="social">
-            <a href="#">📱</a>
-            <a href="#">📧</a>
-            <a href="#">💬</a>
-            <a href="#">📷</a>
+        <div class="footer-content">
+            <div class="social">
+                <a href="#">📱</a>
+                <a href="#">📧</a>
+                <a href="#">💬</a>
+                <a href="#">📷</a>
+            </div>
+            
+            <!-- نماد اینماد -->
+            <div class="trust-badges">
+                <div class="badge-item">
+                    <a href="https://trustseal.enamad.ir/?id=YOUR_CODE_HERE" target="_blank">
+                        <img src="https://trustseal.enamad.ir/logo.aspx?id=YOUR_CODE_HERE" alt="اینماد">
+                    </a>
+                </div>
+            </div>
+            
+            <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
         </div>
-        <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
     <!-- ============================================ -->
-    <!-- کد جاوااسکریپت مستقیم در همین فایل          -->
+    <!-- ✅ کد جاوااسکریپت مستقیماً در همین فایل     -->
     <!-- ============================================ -->
     <script>
         // ============================================
@@ -199,7 +266,12 @@
         // نوتیفیکیشن
         // ============================================
         function showNotification(message) {
+            // حذف نوتیفیکیشن قبلی
+            const old = document.querySelector('.custom-notification');
+            if (old) old.remove();
+            
             const div = document.createElement('div');
+            div.className = 'custom-notification';
             div.textContent = message;
             div.style.cssText = `
                 position: fixed;
@@ -223,7 +295,7 @@
         }
 
         // ============================================
-        // ✅ افزودن به سبد خرید (تابع اصلی)
+        // ✅ افزودن به سبد خرید
         // ============================================
         function addToCart(productId) {
             console.log('📦 کلیک شد - محصول:', productId);
