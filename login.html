@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ورود - بردخون عکس</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* استایل‌های اضافی برای اطمینان */
         * {
             margin: 0;
             padding: 0;
@@ -18,6 +16,7 @@
             direction: rtl;
             min-height: 100vh;
         }
+
         header {
             position: fixed;
             top: 0;
@@ -43,6 +42,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
         nav a {
             color: #2D3436;
@@ -50,9 +50,37 @@
             font-weight: 500;
             font-size: 15px;
             transition: 0.3s;
+            padding: 5px 0;
+            white-space: nowrap;
         }
         nav a:hover {
             color: #6C63FF;
+        }
+        .btn-login {
+            border: 2px solid #6C63FF !important;
+            color: #6C63FF !important;
+            padding: 8px 20px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            background: transparent !important;
+            text-decoration: none !important;
+        }
+        .btn-login:hover {
+            background: #6C63FF !important;
+            color: #fff !important;
+        }
+        .btn-admin {
+            background: linear-gradient(135deg, #FF6584, #FF4757) !important;
+            color: #fff !important;
+            padding: 8px 18px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
+        }
+        .btn-admin:hover {
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
         }
         #cart-link {
             background: #6C63FF;
@@ -60,6 +88,7 @@
             padding: 8px 18px;
             border-radius: 50px;
             font-weight: 700;
+            text-decoration: none !important;
         }
         #cart-count {
             background: #FF6584;
@@ -69,18 +98,7 @@
             font-size: 13px;
             margin-right: 5px;
         }
-        .btn-login {
-            border: 2px solid #6C63FF !important;
-            color: #6C63FF !important;
-            padding: 8px 20px !important;
-            border-radius: 50px !important;
-            font-weight: 700 !important;
-            background: transparent !important;
-        }
-        .btn-login:hover {
-            background: #6C63FF !important;
-            color: #fff !important;
-        }
+
         .auth-section {
             min-height: 100vh;
             display: flex;
@@ -155,6 +173,7 @@
             color: #b0b0b0;
             font-size: 14px;
         }
+
         .btn-primary {
             background: linear-gradient(135deg, #6C63FF, #5a52d5);
             color: #fff;
@@ -175,6 +194,7 @@
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 12px 40px rgba(108, 99, 255, 0.5);
         }
+
         .auth-footer {
             margin-top: 20px;
             text-align: center;
@@ -189,11 +209,43 @@
         .auth-footer a:hover {
             text-decoration: underline;
         }
+
+        /* نوتیفیکیشن */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2D3436;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 15px;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            max-width: 90%;
+            text-align: center;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .notification.success {
+            background: linear-gradient(135deg, #2ECC71, #27ae60);
+        }
+        .notification.error {
+            background: linear-gradient(135deg, #E74C3C, #c0392b);
+        }
+
         footer {
             background: #2D3436;
             color: #fff;
             padding: 35px 50px;
             text-align: center;
+            margin-top: 60px;
         }
         footer p {
             opacity: 0.7;
@@ -216,6 +268,7 @@
             opacity: 1;
             transform: translateY(-3px);
         }
+
         @media (max-width: 768px) {
             header {
                 padding: 0 15px;
@@ -240,11 +293,18 @@
                 padding: 5px 14px !important;
                 font-size: 13px !important;
             }
+            .btn-admin {
+                padding: 5px 14px !important;
+                font-size: 13px !important;
+            }
             .auth-box {
                 padding: 28px 20px;
             }
             .auth-box h2 {
                 font-size: 24px;
+            }
+            footer {
+                padding: 25px 20px;
             }
         }
         @media (max-width: 480px) {
@@ -266,16 +326,22 @@
                 font-size: 12px !important;
                 padding: 4px 12px !important;
             }
+            .btn-admin {
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
             <a href="index.html">خانه</a>
             <a href="shop.html">محصولات</a>
-            <a href="cart.html">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+            <a href="cart.html" id="cart-link">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+            <a href="admin.html" class="btn-admin">⚙️ مدیریت</a>
             <a href="register.html" class="btn-login">ثبت‌نام</a>
         </nav>
     </header>
@@ -313,9 +379,9 @@
     </footer>
 
     <script>
-        // ========================
+        // ============================================
         // مدیریت سبد خرید
-        // ========================
+        // ============================================
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let users = JSON.parse(localStorage.getItem('users')) || [];
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -327,55 +393,42 @@
             });
         }
 
+        // ============================================
+        // نوتیفیکیشن
+        // ============================================
         function showNotification(message, type = 'success') {
             const existing = document.querySelector('.notification');
             if (existing) existing.remove();
-            
+
             const div = document.createElement('div');
             div.className = `notification ${type}`;
             div.textContent = message;
-            div.style.cssText = `
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%) translateY(100px);
-                background: ${type === 'error' ? '#E74C3C' : '#2ECC71'};
-                color: #fff;
-                padding: 15px 35px;
-                border-radius: 15px;
-                font-weight: 500;
-                z-index: 9999;
-                opacity: 0;
-                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-                font-size: 16px;
-                max-width: 90%;
-                text-align: center;
-            `;
             document.body.appendChild(div);
-            
+
             requestAnimationFrame(() => {
-                div.style.opacity = '1';
-                div.style.transform = 'translateX(-50%) translateY(0)';
+                div.classList.add('show');
             });
-            
+
             setTimeout(() => {
-                div.style.opacity = '0';
-                div.style.transform = 'translateX(-50%) translateY(100px)';
+                div.classList.remove('show');
                 setTimeout(() => div.remove(), 500);
             }, 3500);
         }
 
+        // ============================================
+        // لاگین (ورود)
+        // ============================================
         function handleLogin(e) {
             e.preventDefault();
+
             const identifier = document.getElementById('login-email');
             const password = document.getElementById('login-password');
-            
+
             if (!identifier || !password) {
                 showNotification('لطفاً همه فیلدها را پر کنید!', 'error');
                 return;
             }
-            
+
             const identifierVal = identifier.value.trim();
             const passwordVal = password.value;
 
@@ -384,37 +437,70 @@
                 return;
             }
 
-            const user = users.find(u => 
+            // دریافت کاربران از localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // پیدا کردن کاربر
+            const user = users.find(u =>
                 (u.phone === identifierVal || u.email === identifierVal) && u.password === passwordVal
             );
 
             if (!user) {
-                showNotification('اطلاعات وارد شده صحیح نیست!', 'error');
+                showNotification('❌ اطلاعات وارد شده صحیح نیست!', 'error');
                 return;
             }
 
-            currentUser = user;
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            // ذخیره کاربر فعلی
+            localStorage.setItem('currentUser', JSON.stringify(user));
+
             showNotification('✅ خوش آمدید ' + user.name + '!');
-            setTimeout(() => window.location.href = 'index.html', 1500);
+
+            // هدایت به صفحه اصلی بعد از 1.5 ثانیه
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // ============================================
+        // خروج از حساب
+        // ============================================
+        function logout() {
+            localStorage.removeItem('currentUser');
+            showNotification('🚪 از حساب خود خارج شدید', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        // ============================================
+        // اجرا در زمان بارگذاری
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // بروزرسانی تعداد سبد خرید
             updateCartCount();
-            
+
+            // ثبت رویداد فرم ورود
             const loginForm = document.getElementById('login-form');
             if (loginForm) {
                 loginForm.addEventListener('submit', handleLogin);
             }
 
+            // اگر کاربر وارد شده بود، دکمه ورود را تغییر بده
             if (currentUser) {
                 document.querySelectorAll('.btn-login').forEach(el => {
                     el.textContent = `👤 ${currentUser.name}`;
                     el.href = '#';
                     el.style.cursor = 'pointer';
+                    el.onclick = (e) => {
+                        e.preventDefault();
+                        if (confirm('آیا می‌خواهید از حساب خود خارج شوید؟')) {
+                            logout();
+                        }
+                    };
                 });
             }
         });
     </script>
+
 </body>
 </html>
