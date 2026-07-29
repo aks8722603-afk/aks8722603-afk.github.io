@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ثبت‌نام - بردخون عکس</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -17,6 +16,7 @@
             direction: rtl;
             min-height: 100vh;
         }
+
         header {
             position: fixed;
             top: 0;
@@ -42,6 +42,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
         nav a {
             color: #2D3436;
@@ -49,9 +50,37 @@
             font-weight: 500;
             font-size: 15px;
             transition: 0.3s;
+            padding: 5px 0;
+            white-space: nowrap;
         }
         nav a:hover {
             color: #6C63FF;
+        }
+        .btn-login {
+            border: 2px solid #6C63FF !important;
+            color: #6C63FF !important;
+            padding: 8px 20px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            background: transparent !important;
+            text-decoration: none !important;
+        }
+        .btn-login:hover {
+            background: #6C63FF !important;
+            color: #fff !important;
+        }
+        .btn-admin {
+            background: linear-gradient(135deg, #FF6584, #FF4757) !important;
+            color: #fff !important;
+            padding: 8px 18px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
+        }
+        .btn-admin:hover {
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
         }
         #cart-link {
             background: #6C63FF;
@@ -59,6 +88,7 @@
             padding: 8px 18px;
             border-radius: 50px;
             font-weight: 700;
+            text-decoration: none !important;
         }
         #cart-count {
             background: #FF6584;
@@ -68,18 +98,7 @@
             font-size: 13px;
             margin-right: 5px;
         }
-        .btn-login {
-            border: 2px solid #6C63FF !important;
-            color: #6C63FF !important;
-            padding: 8px 20px !important;
-            border-radius: 50px !important;
-            font-weight: 700 !important;
-            background: transparent !important;
-        }
-        .btn-login:hover {
-            background: #6C63FF !important;
-            color: #fff !important;
-        }
+
         .auth-section {
             min-height: 100vh;
             display: flex;
@@ -154,6 +173,7 @@
             color: #b0b0b0;
             font-size: 14px;
         }
+
         .btn-primary {
             background: linear-gradient(135deg, #6C63FF, #5a52d5);
             color: #fff;
@@ -174,6 +194,7 @@
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 12px 40px rgba(108, 99, 255, 0.5);
         }
+
         .auth-footer {
             margin-top: 20px;
             text-align: center;
@@ -188,11 +209,42 @@
         .auth-footer a:hover {
             text-decoration: underline;
         }
+
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2D3436;
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 15px;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            max-width: 90%;
+            text-align: center;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .notification.success {
+            background: linear-gradient(135deg, #2ECC71, #27ae60);
+        }
+        .notification.error {
+            background: linear-gradient(135deg, #E74C3C, #c0392b);
+        }
+
         footer {
             background: #2D3436;
             color: #fff;
             padding: 35px 50px;
             text-align: center;
+            margin-top: 60px;
         }
         footer p {
             opacity: 0.7;
@@ -215,6 +267,7 @@
             opacity: 1;
             transform: translateY(-3px);
         }
+
         @media (max-width: 768px) {
             header {
                 padding: 0 15px;
@@ -239,11 +292,18 @@
                 padding: 5px 14px !important;
                 font-size: 13px !important;
             }
+            .btn-admin {
+                padding: 5px 14px !important;
+                font-size: 13px !important;
+            }
             .auth-box {
                 padding: 28px 20px;
             }
             .auth-box h2 {
                 font-size: 24px;
+            }
+            footer {
+                padding: 25px 20px;
             }
         }
         @media (max-width: 480px) {
@@ -265,16 +325,22 @@
                 font-size: 12px !important;
                 padding: 4px 12px !important;
             }
+            .btn-admin {
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
             <a href="index.html">خانه</a>
             <a href="shop.html">محصولات</a>
-            <a href="cart.html">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+            <a href="cart.html" id="cart-link">🛒 سبد خرید (<span id="cart-count">0</span>)</a>
+            <a href="admin.html" class="btn-admin">⚙️ مدیریت</a>
             <a href="login.html" class="btn-login">ورود</a>
         </nav>
     </header>
@@ -338,55 +404,36 @@
         function showNotification(message, type = 'success') {
             const existing = document.querySelector('.notification');
             if (existing) existing.remove();
-            
+
             const div = document.createElement('div');
             div.className = `notification ${type}`;
             div.textContent = message;
-            div.style.cssText = `
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%) translateY(100px);
-                background: ${type === 'error' ? '#E74C3C' : '#2ECC71'};
-                color: #fff;
-                padding: 15px 35px;
-                border-radius: 15px;
-                font-weight: 500;
-                z-index: 9999;
-                opacity: 0;
-                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-                font-size: 16px;
-                max-width: 90%;
-                text-align: center;
-            `;
             document.body.appendChild(div);
-            
+
             requestAnimationFrame(() => {
-                div.style.opacity = '1';
-                div.style.transform = 'translateX(-50%) translateY(0)';
+                div.classList.add('show');
             });
-            
+
             setTimeout(() => {
-                div.style.opacity = '0';
-                div.style.transform = 'translateX(-50%) translateY(100px)';
+                div.classList.remove('show');
                 setTimeout(() => div.remove(), 500);
             }, 3500);
         }
 
         function handleRegister(e) {
             e.preventDefault();
+
             const name = document.getElementById('reg-name');
             const phone = document.getElementById('reg-phone');
             const email = document.getElementById('reg-email');
             const password = document.getElementById('reg-password');
             const confirm = document.getElementById('reg-password-confirm');
-            
+
             if (!name || !phone || !password || !confirm) {
                 showNotification('لطفاً همه فیلدها را پر کنید!', 'error');
                 return;
             }
-            
+
             const nameVal = name.value.trim();
             const phoneVal = phone.value.trim();
             const emailVal = email ? email.value.trim() : '';
@@ -408,25 +455,37 @@
                 return;
             }
 
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
             if (users.find(u => u.phone === phoneVal)) {
                 showNotification('این شماره قبلاً ثبت شده است!', 'error');
                 return;
             }
 
-            const newUser = { name: nameVal, phone: phoneVal, email: emailVal, password: passwordVal };
+            const newUser = {
+                name: nameVal,
+                phone: phoneVal,
+                email: emailVal,
+                password: passwordVal,
+                date: new Date().toISOString()
+            };
+
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
-            
+
             currentUser = newUser;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
+
             showNotification('✅ ثبت‌نام با موفقیت انجام شد! خوش آمدید ' + nameVal);
-            setTimeout(() => window.location.href = 'index.html', 1500);
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
-            
+
             const registerForm = document.getElementById('register-form');
             if (registerForm) {
                 registerForm.addEventListener('submit', handleRegister);
@@ -437,9 +496,18 @@
                     el.textContent = `👤 ${currentUser.name}`;
                     el.href = '#';
                     el.style.cursor = 'pointer';
+                    el.onclick = (e) => {
+                        e.preventDefault();
+                        if (confirm('آیا می‌خواهید از حساب خود خارج شوید؟')) {
+                            localStorage.removeItem('currentUser');
+                            showNotification('🚪 از حساب خود خارج شدید', 'error');
+                            setTimeout(() => window.location.href = 'index.html', 1000);
+                        }
+                    };
                 });
             }
         });
     </script>
+
 </body>
 </html>
