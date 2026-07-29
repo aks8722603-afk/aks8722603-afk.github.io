@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تأیید پرداخت - بردخون عکس</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Tahoma', 'Vazir', sans-serif;
             background: #f5f7ff;
@@ -21,11 +25,20 @@
             border-radius: 20px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
-        .icon { font-size: 70px; display: block; margin-bottom: 15px; }
-        h2 { margin-bottom: 10px; }
-        p { color: #636E72; margin-bottom: 20px; }
+        .icon {
+            font-size: 70px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            color: #636E72;
+            margin-bottom: 20px;
+        }
         .btn {
             display: inline-block;
             background: #6C63FF;
@@ -36,10 +49,23 @@
             font-weight: 700;
             transition: 0.3s;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(108,99,255,0.4); }
-        .success { color: #2ECC71; }
-        .error { color: #E74C3C; }
-        .loading { color: #F39C12; }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(108, 99, 255, 0.4);
+        }
+        .success {
+            color: #2ECC71;
+        }
+        .error {
+            color: #E74C3C;
+        }
+        .ref-id {
+            font-size: 18px;
+            background: #f8f9fe;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +88,7 @@
             const status = urlParams.get('Status');
             const amount = parseInt(localStorage.getItem('paymentAmount')) || 0;
 
+            // اگر کاربر پرداخت را لغو کرد یا خطایی رخ داد
             if (status !== 'OK' || !authority) {
                 resultDiv.innerHTML = `
                     <span class="icon">❌</span>
@@ -73,9 +100,14 @@
             }
 
             try {
+                // ============================================
+                // تأیید پرداخت با زرین‌پال
+                // ============================================
                 const response = await fetch('https://api.zarinpal.com/pg/v4/payment/verify.json', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
                         merchant_id: MERCHANT_ID,
                         amount: amount,
@@ -85,8 +117,14 @@
 
                 const data = await response.json();
 
+                // ============================================
+                // بررسی نتیجه تأیید
+                // ============================================
                 if (data.data && data.data.code === 100) {
                     // پرداخت موفق
+                    const refId = data.data.ref_id;
+
+                    // پاک کردن سبد خرید
                     localStorage.removeItem('cart');
                     localStorage.removeItem('payAmount');
                     localStorage.removeItem('paymentAuthority');
@@ -95,20 +133,30 @@
                     resultDiv.innerHTML = `
                         <span class="icon">✅</span>
                         <h2 style="color:#2ECC71;">پرداخت با موفقیت انجام شد!</h2>
-                        <p>شماره پیگیری: <strong>${data.data.ref_id}</strong></p>
+                        <div class="ref-id">شماره پیگیری: <strong>${refId}</strong></div>
                         <p style="font-size:14px;color:#636E72;">از خرید شما متشکریم!</p>
                         <br>
                         <a href="index.html" class="btn">بازگشت به صفحه اصلی</a>
                     `;
                 } else {
+                    // پرداخت ناموفق
+                    let errorMessage = 'پرداخت ناموفق!';
+                    const code = data.data?.code;
+
+                    if (code === 101) {
+                        errorMessage = 'پرداخت ناموفق! تراکنش قبلاً تأیید شده است.';
+                    } else {
+                        errorMessage = 'پرداخت ناموفق! کد خطا: ' + (code || 'نامشخص');
+                    }
+
                     resultDiv.innerHTML = `
                         <span class="icon">❌</span>
-                        <h2 style="color:#E74C3C;">پرداخت ناموفق!</h2>
-                        <p>کد خطا: ${data.data?.code || 'نامشخص'}</p>
+                        <h2 style="color:#E74C3C;">${errorMessage}</h2>
                         <a href="cart.html" class="btn">تلاش مجدد</a>
                     `;
                 }
             } catch (error) {
+                console.error('Error:', error);
                 resultDiv.innerHTML = `
                     <span class="icon">❌</span>
                     <h2 style="color:#E74C3C;">خطا در تأیید پرداخت</h2>
