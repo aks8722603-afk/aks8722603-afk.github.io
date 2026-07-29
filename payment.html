@@ -387,7 +387,7 @@
 
     <script>
         // ============================================
-        // 🔐 تنظیمات زرین‌پال - طبق مستندات
+        // 🔐 تنظیمات زرین‌پال (طبق مستندات)
         // ============================================
         const MERCHANT_ID = '84b2b4e0-e560-48da-92cf-e7a69776d68c';
         const CALLBACK_URL = 'https://bordekhon-aks.ir/payment-callback.html';
@@ -398,7 +398,7 @@
         const ZARINPAL_API = {
             REQUEST: 'https://payment.zarinpal.com/pg/v4/payment/request.json',
             VERIFY: 'https://payment.zarinpal.com/pg/v4/payment/verify.json',
-            START_PAY: 'https://www.zarinpal.com/pg/StartPay/'
+            START_PAY: 'https://payment.zarinpal.com/pg/StartPay/'
         };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -430,12 +430,13 @@
 
                 try {
                     // ============================================
-                    // درخواست به زرین‌پال طبق مستندات
+                    // 📤 ارسال درخواست به زرین‌پال (طبق مستندات)
                     // ============================================
                     const response = await fetch(ZARINPAL_API.REQUEST, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         body: JSON.stringify({
                             merchant_id: MERCHANT_ID,
@@ -446,35 +447,48 @@
                             metadata: {
                                 mobile: currentUser?.phone || '',
                                 email: currentUser?.email || '',
+                                order_id: document.getElementById('order-id').textContent
                             }
                         })
                     });
 
                     const data = await response.json();
 
+                    // ============================================
+                    // 📥 بررسی پاسخ زرین‌پال
+                    // ============================================
                     if (data.data && data.data.code === 100) {
+                        // موفق - هدایت به درگاه
                         const authority = data.data.authority;
                         localStorage.setItem('paymentAuthority', authority);
                         localStorage.setItem('paymentAmount', amount);
                         window.location.href = ZARINPAL_API.START_PAY + authority;
                     } else {
+                        // نمایش خطاها طبق مستندات
                         let errorMessage = '❌ خطا در اتصال به درگاه پرداخت';
                         const code = data.data?.code;
 
-                        if (code === -9) {
-                            errorMessage = '❌ خطا: مبلغ وارد شده نامعتبر است (حداقل ۱,۰۰۰ تومان)';
-                        } else if (code === -10) {
-                            errorMessage = '❌ خطا: اطلاعات درگاه پرداخت کامل نیست';
-                        } else if (code === -11) {
-                            errorMessage = '❌ خطا: مرچنت کد معتبر نیست';
-                        } else if (code === -12) {
-                            errorMessage = '❌ خطا: آدرس بازگشت (Callback URL) معتبر نیست';
-                        } else if (code === -13) {
-                            errorMessage = '❌ خطا: درگاه پرداخت غیرفعال است';
-                        } else if (code === -14) {
-                            errorMessage = '❌ خطا: آدرس بازگشت با دامنه ثبت‌شده درگاه مطابقت ندارد';
-                        } else {
-                            errorMessage += '<br><small>کد خطا: ' + (code || 'نامشخص') + '</small>';
+                        switch (code) {
+                            case -9:
+                                errorMessage = '❌ خطا: مبلغ وارد شده نامعتبر است (حداقل ۱,۰۰۰ تومان)';
+                                break;
+                            case -10:
+                                errorMessage = '❌ خطا: اطلاعات درگاه پرداخت کامل نیست';
+                                break;
+                            case -11:
+                                errorMessage = '❌ خطا: مرچنت کد معتبر نیست';
+                                break;
+                            case -12:
+                                errorMessage = '❌ خطا: آدرس بازگشت (Callback URL) معتبر نیست';
+                                break;
+                            case -13:
+                                errorMessage = '❌ خطا: درگاه پرداخت غیرفعال است';
+                                break;
+                            case -14:
+                                errorMessage = '❌ خطا: آدرس بازگشت با دامنه ثبت‌شده درگاه مطابقت ندارد';
+                                break;
+                            default:
+                                errorMessage += '<br><small>کد خطا: ' + (code || 'نامشخص') + '</small>';
                         }
 
                         resultDiv.className = 'error';
