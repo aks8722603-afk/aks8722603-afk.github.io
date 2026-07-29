@@ -392,7 +392,7 @@
         const MERCHANT_ID = '84b2b4e0-e560-48da-92cf-e7a69776d68c';
 
         // ============================================
-        // 🌐 آدرس بازگشت (حتماً دقیق وارد کنید)
+        // 🌐 آدرس بازگشت
         // ============================================
         const CALLBACK_URL = 'https://bordekhon-aks.ir/payment-callback.html';
 
@@ -413,12 +413,20 @@
                     return;
                 }
 
+                // بررسی اینکه آیا کاربر وارد شده است
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = '❌ لطفاً ابتدا وارد حساب خود شوید!';
+                    return;
+                }
+
                 resultDiv.className = 'loading';
                 resultDiv.innerHTML = '⏳ در حال اتصال به درگاه زرین‌پال...';
 
                 try {
                     // ============================================
-                    // ارسال درخواست به زرین‌پال با آدرس بازگشت
+                    // ارسال درخواست به زرین‌پال
                     // ============================================
                     const response = await fetch('https://api.zarinpal.com/pg/v4/payment/request.json', {
                         method: 'POST',
@@ -428,12 +436,12 @@
                         body: JSON.stringify({
                             merchant_id: MERCHANT_ID,
                             amount: amount,
-                            callback_url: CALLBACK_URL, // ← آدرس بازگشت اینجا ارسال می‌شود
+                            callback_url: CALLBACK_URL,
                             description: 'خرید از فروشگاه بردخون عکس - سفارش #' + document.getElementById('order-id')
                                 .textContent,
                             metadata: {
-                                mobile: '',
-                                email: '',
+                                mobile: currentUser?.phone || '',
+                                email: currentUser?.email || '',
                             }
                         })
                     });
@@ -466,12 +474,22 @@
                             errorMessage = '❌ خطا: درگاه پرداخت غیرفعال است';
                         } else if (code === -14) {
                             errorMessage = '❌ خطا: آدرس بازگشت با دامنه ثبت‌شده درگاه مطابقت ندارد';
+                        } else if (code === -15) {
+                            errorMessage = '❌ خطا: درگاه پرداخت با این مرچنت کد یافت نشد';
+                        } else if (code === -16) {
+                            errorMessage = '❌ خطا: تراکنش با خطا مواجه شد';
                         } else {
                             errorMessage += '<br><small>کد خطا: ' + (code || 'نامشخص') + '</small>';
                         }
 
                         resultDiv.className = 'error';
                         resultDiv.innerHTML = errorMessage;
+
+                        // اضافه کردن دکمه بازگشت
+                        if (code === -12 || code === -14) {
+                            resultDiv.innerHTML +=
+                                '<br><br><a href="cart.html" style="display:inline-block;background:#6C63FF;color:#fff;padding:10px 25px;border-radius:50px;text-decoration:none;font-weight:700;">بازگشت به سبد خرید</a>';
+                        }
                     }
                 } catch (error) {
                     console.error('Error:', error);
