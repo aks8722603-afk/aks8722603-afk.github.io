@@ -6,23 +6,105 @@
     <title>محصولات - بردخون عکس</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ============================================
+           استایل‌های کامل
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Tahoma', 'Vazir', sans-serif;
+            background: #f5f7ff;
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        /* هدر */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 50px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            color: #6C63FF;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #2D3436;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.3s;
+            padding: 5px 0;
+            white-space: nowrap;
+        }
+        nav a:hover {
+            color: #6C63FF;
+        }
+        .btn-login {
+            border: 2px solid #6C63FF !important;
+            color: #6C63FF !important;
+            padding: 8px 20px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            background: transparent !important;
+            text-decoration: none !important;
+        }
+        .btn-login:hover {
+            background: #6C63FF !important;
+            color: #fff !important;
+        }
         .btn-admin {
             background: linear-gradient(135deg, #FF6584, #FF4757) !important;
             color: #fff !important;
             padding: 8px 18px !important;
             border-radius: 50px !important;
             font-weight: 700 !important;
-            transition: all 0.3s ease !important;
+            text-decoration: none !important;
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
         }
         .btn-admin:hover {
             transform: translateY(-3px) scale(1.05) !important;
             box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
         }
-        .btn-admin::after {
-            display: none !important;
+        #cart-link {
+            background: #6C63FF;
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none !important;
+        }
+        #cart-count {
+            background: #FF6584;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1px 9px;
+            font-size: 13px;
+            margin-right: 5px;
         }
 
+        /* محصولات */
         .products-section {
             max-width: 1200px;
             margin: 120px auto 60px;
@@ -59,7 +141,7 @@
             border-radius: 20px;
             padding: 20px 18px;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             position: relative;
         }
@@ -81,12 +163,9 @@
             z-index: 2;
         }
 
-        /* ============================================
-           اندازه عکس محصولات - اینجا را تغییر دهید
-           ============================================ */
         .product-card .product-image {
             width: 100%;
-            height: 160px;           /* ← ارتفاع عکس */
+            height: 160px;
             object-fit: cover;
             border-radius: 12px;
             display: block;
@@ -154,80 +233,10 @@
             border-radius: 15px;
             font-weight: 500;
             z-index: 9999;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             font-size: 16px;
             max-width: 90%;
             text-align: center;
-        }
-
-        /* هدر */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 0 50px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-        }
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: #6C63FF;
-        }
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: #2D3436;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: 0.3s;
-            padding: 5px 0;
-            white-space: nowrap;
-        }
-        nav a:hover {
-            color: #6C63FF;
-        }
-        .btn-login {
-            border: 2px solid #6C63FF !important;
-            color: #6C63FF !important;
-            padding: 8px 20px !important;
-            border-radius: 50px !important;
-            font-weight: 700 !important;
-            background: transparent !important;
-            text-decoration: none !important;
-        }
-        .btn-login:hover {
-            background: #6C63FF !important;
-            color: #fff !important;
-        }
-        #cart-link {
-            background: #6C63FF;
-            color: #fff !important;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none !important;
-        }
-        #cart-count {
-            background: #FF6584;
-            color: #fff;
-            border-radius: 50%;
-            padding: 1px 9px;
-            font-size: 13px;
-            margin-right: 5px;
         }
 
         /* فوتر */
@@ -268,34 +277,91 @@
                 flex-wrap: wrap;
                 gap: 8px;
             }
-            .logo { font-size: 20px; }
-            nav { gap: 10px; }
-            nav a { font-size: 13px; }
-            .btn-login { padding: 5px 14px !important; font-size: 13px !important; }
-            .btn-admin { padding: 5px 14px !important; font-size: 13px !important; }
-            #cart-link { padding: 5px 12px; font-size: 13px; }
-            .products-section { margin: 100px auto 30px; }
-            .product-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
-            .product-card .product-image { height: 130px; }
-            .product-card { padding: 15px 12px; }
-            .product-card h3 { font-size: 15px; }
-            .product-card .price { font-size: 18px; }
-            .btn-add { font-size: 13px; padding: 8px 15px; }
+            .logo {
+                font-size: 20px;
+            }
+            nav {
+                gap: 10px;
+            }
+            nav a {
+                font-size: 13px;
+            }
+            .btn-login {
+                padding: 5px 14px !important;
+                font-size: 13px !important;
+            }
+            .btn-admin {
+                padding: 5px 14px !important;
+                font-size: 13px !important;
+            }
+            #cart-link {
+                padding: 5px 12px;
+                font-size: 13px;
+            }
+            .products-section {
+                margin: 100px auto 30px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .product-card .product-image {
+                height: 130px;
+            }
+            .product-card {
+                padding: 15px 12px;
+            }
+            .product-card h3 {
+                font-size: 15px;
+            }
+            .product-card .price {
+                font-size: 18px;
+            }
+            .btn-add {
+                font-size: 13px;
+                padding: 8px 15px;
+            }
+            footer {
+                padding: 25px 20px;
+            }
         }
 
         @media (max-width: 480px) {
-            .product-grid { grid-template-columns: 1fr; }
-            .product-card .product-image { height: 180px; }
-            .products-header h2 { font-size: 24px; }
-            nav a { font-size: 12px; }
-            .btn-login { font-size: 12px !important; padding: 4px 12px !important; }
-            .btn-admin { font-size: 12px !important; padding: 4px 12px !important; }
-            #cart-link { font-size: 12px; padding: 4px 10px; }
-            .product-card .price { font-size: 20px; }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-card .product-image {
+                height: 180px;
+            }
+            .products-header h2 {
+                font-size: 24px;
+            }
+            nav a {
+                font-size: 12px;
+            }
+            .btn-login {
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
+            .btn-admin {
+                font-size: 12px !important;
+                padding: 4px 12px !important;
+            }
+            #cart-link {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+            .product-card .price {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ============================================ -->
+    <!-- هدر                                          -->
+    <!-- ============================================ -->
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
@@ -307,6 +373,9 @@
         </nav>
     </header>
 
+    <!-- ============================================ -->
+    <!-- محصولات                                      -->
+    <!-- ============================================ -->
     <section class="products-section">
         <div class="products-header">
             <h2>🛍️ محصولات <span>بردخون عکس</span></h2>
@@ -317,6 +386,9 @@
         </div>
     </section>
 
+    <!-- ============================================ -->
+    <!-- فوتر                                         -->
+    <!-- ============================================ -->
     <footer>
         <div class="social">
             <a href="#">📱</a>
@@ -327,39 +399,42 @@
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
+    <!-- ============================================ -->
+    <!-- جاوااسکریپت                                  -->
+    <!-- ============================================ -->
     <script>
         // ============================================
         // لیست محصولات
         // ============================================
         const products = [
-            { 
-                id: 1, 
-                name: 'فلش مموری ۳۲ گیگ', 
-                price: 180000, 
+            {
+                id: 1,
+                name: 'فلش مموری ۳۲ گیگ',
+                price: 180000,
                 image: 'images/flash32.jpg',
                 description: 'سرعت بالا، مناسب برای ذخیره‌سازی عکس و فیلم',
                 badge: 'پرفروش'
             },
-            { 
-                id: 2, 
-                name: 'فلش مموری ۶۴ گیگ', 
-                price: 290000, 
+            {
+                id: 2,
+                name: 'فلش مموری ۶۴ گیگ',
+                price: 290000,
                 image: 'images/flash64.jpg',
                 description: 'ظرفیت بالا با سرعت فوق‌العاده',
                 badge: 'ویژه'
             },
-            { 
-                id: 3, 
-                name: 'قاب عکس ۲۱×۱۶', 
-                price: 85000, 
+            {
+                id: 3,
+                name: 'قاب عکس ۲۱×۱۶',
+                price: 85000,
                 image: 'images/frame1621.jpg',
                 description: 'قاب چوبی با کیفیت، مناسب برای عکس‌های ۶×۴',
                 badge: 'جدید'
             },
-            { 
-                id: 4, 
-                name: 'قاب عکس ۲۰×۳۰', 
-                price: 120000, 
+            {
+                id: 4,
+                name: 'قاب عکس ۲۰×۳۰',
+                price: 120000,
                 image: 'images/frame2030.jpg',
                 description: 'قاب مگنتی با طراحی مدرن',
                 badge: 'تخفیف'
@@ -387,10 +462,13 @@
             return products.find(p => p.id === id);
         }
 
+        // ============================================
+        // نوتیفیکیشن
+        // ============================================
         function showNotification(message) {
             const old = document.querySelector('.custom-notification');
             if (old) old.remove();
-            
+
             const div = document.createElement('div');
             div.className = 'custom-notification';
             div.textContent = message;
@@ -398,27 +476,40 @@
             setTimeout(() => div.remove(), 3000);
         }
 
+        // ============================================
+        // ✅ افزودن به سبد خرید
+        // ============================================
         function addToCart(productId) {
+            console.log('📦 افزودن محصول:', productId);
+
             const product = getProductById(productId);
             if (!product) {
                 showNotification('❌ محصول یافت نشد!');
                 return;
             }
-            
+
             const existing = cart.find(item => item.id === productId);
             if (existing) {
                 existing.qty += 1;
             } else {
                 cart.push({ id: productId, qty: 1 });
             }
+
             saveCart();
             showNotification(`✅ ${product.name} به سبد اضافه شد!`);
         }
 
+        // ============================================
+        // رندر محصولات
+        // ============================================
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            if (!grid) return;
-            
+            if (!grid) {
+                console.log('❌ المنت product-grid پیدا نشد');
+                return;
+            }
+
+            console.log('🔄 رندر محصولات...');
             let html = '';
             products.forEach(p => {
                 html += `
@@ -435,12 +526,25 @@
                 `;
             });
             grid.innerHTML = html;
+            console.log('✅ محصولات رندر شدند');
         }
 
+        // ============================================
+        // 🚀 اجرا در زمان بارگذاری
+        // ============================================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ صفحه محصولات بارگذاری شد');
             updateCartCount();
             renderProducts();
+
+            // بررسی اینکه آیا تابع addToCart در دسترس است
+            if (typeof addToCart === 'function') {
+                console.log('✅ تابع addToCart پیدا شد');
+            } else {
+                console.log('❌ تابع addToCart پیدا نشد!');
+            }
         });
     </script>
+
 </body>
 </html>
