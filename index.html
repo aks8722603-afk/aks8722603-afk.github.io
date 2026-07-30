@@ -6,6 +6,9 @@
     <title>بردخون عکس | فروشگاه تخصصی</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ============================================
+           دکمه مدیریت
+           ============================================ */
         .btn-admin {
             background: linear-gradient(135deg, #FF6584, #FF4757) !important;
             color: #fff !important;
@@ -24,7 +27,7 @@
         }
 
         /* ============================================
-           استایل لوگو در هدر
+           لوگو در هدر
            ============================================ */
         .logo {
             display: flex;
@@ -41,7 +44,7 @@
         }
 
         /* ============================================
-           استایل تصویر هیرو
+           تصویر هیرو
            ============================================ */
         .hero-image img {
             width: 100%;
@@ -127,6 +130,69 @@
             box-shadow: 0 8px 30px rgba(108, 99, 255, 0.3);
         }
 
+        /* ============================================
+           اطلاعات تماس
+           ============================================ */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.08);
+            margin-top: -40px;
+            position: relative;
+            z-index: 2;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fe;
+        }
+        .contact-item:hover {
+            background: #e8ecff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.12);
+        }
+        .contact-item .icon {
+            font-size: 32px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .contact-item .info {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-item .info .label {
+            font-size: 12px;
+            color: #636E72;
+            font-weight: 500;
+        }
+        .contact-item .info .value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2D3436;
+            line-height: 1.6;
+        }
+        .contact-item .info .value a {
+            color: #2D3436;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .contact-item .info .value a:hover {
+            color: #6C63FF;
+        }
+
+        /* ============================================
+           ویژگی‌ها (Features)
+           ============================================ */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -231,6 +297,9 @@
             margin-right: 5px;
         }
 
+        /* ============================================
+           فوتر
+           ============================================ */
         footer {
             background: #2D3436;
             color: #fff;
@@ -284,6 +353,11 @@
             .hero-image img {
                 max-width: 350px;
             }
+            .contact-info {
+                grid-template-columns: 1fr 1fr;
+                padding: 30px 20px;
+                margin-top: -20px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -323,6 +397,21 @@
             .hero-image img {
                 max-width: 250px;
             }
+            .contact-info {
+                grid-template-columns: 1fr;
+                padding: 20px 15px;
+                gap: 15px;
+            }
+            .contact-item {
+                padding: 12px 15px;
+            }
+            .contact-item .icon {
+                font-size: 24px;
+                min-width: 40px;
+            }
+            .contact-item .info .value {
+                font-size: 14px;
+            }
             .features {
                 padding: 30px 15px;
                 grid-template-columns: 1fr 1fr;
@@ -347,6 +436,9 @@
             }
             .hero-image img {
                 max-width: 200px;
+            }
+            .contact-item .info .value {
+                font-size: 13px;
             }
         }
     </style>
@@ -388,6 +480,47 @@
     </section>
 
     <!-- ============================================ -->
+    <!-- اطلاعات تماس (شماره، آدرس، اینستاگرام)    -->
+    <!-- ============================================ -->
+    <section class="contact-info">
+        <div class="contact-item">
+            <span class="icon">📞</span>
+            <div class="info">
+                <span class="label">تلفن همراه</span>
+                <span class="value"><a href="tel:09173705023">۰۹۱۷۳۷۰۵۰۲۳</a></span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <span class="icon">📞</span>
+            <div class="info">
+                <span class="label">تلفن ثابت</span>
+                <span class="value"><a href="tel:07735456603">۰۷۷۳۵۴۵۶۶۰۳</a></span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <span class="icon">📍</span>
+            <div class="info">
+                <span class="label">آدرس</span>
+                <span class="value">استان بوشهر - شهر بردخون - خیابان امام خمینی(ره) - عکاسی بردخون عکس</span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <span class="icon">📷</span>
+            <div class="info">
+                <span class="label">اینستاگرام</span>
+                <span class="value"><a href="https://instagram.com/b.aks6603" target="_blank">@b.aks6603</a></span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <span class="icon">🕐</span>
+            <div class="info">
+                <span class="label">ساعت کاری</span>
+                <span class="value">۹ صبح تا ۸ شب</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
     <!-- ویژگی‌ها                                     -->
     <!-- ============================================ -->
     <section class="features" id="features">
@@ -418,10 +551,11 @@
     <!-- ============================================ -->
     <footer>
         <div class="social">
-            <a href="#">📱</a>
+            <a href="https://instagram.com/b.aks6603" target="_blank">📷</a>
+            <a href="tel:09173705023">📞</a>
+            <a href="tel:07735456603">📞</a>
             <a href="#">📧</a>
             <a href="#">💬</a>
-            <a href="#">📷</a>
         </div>
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
