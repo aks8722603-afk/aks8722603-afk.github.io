@@ -4,103 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محصولات - بردخون عکس</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Tahoma', 'Vazir', sans-serif;
-            background: #f5f7ff;
-            direction: rtl;
-            min-height: 100vh;
-        }
-
-        /* هدر */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 0 50px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-        }
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: #6C63FF;
-        }
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: #2D3436;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: 0.3s;
-            padding: 5px 0;
-            white-space: nowrap;
-        }
-        nav a:hover {
-            color: #6C63FF;
-        }
-        .btn-login {
-            border: 2px solid #6C63FF !important;
-            color: #6C63FF !important;
-            padding: 8px 20px !important;
-            border-radius: 50px !important;
-            font-weight: 700 !important;
-            background: transparent !important;
-            text-decoration: none !important;
-        }
-        .btn-login:hover {
-            background: #6C63FF !important;
-            color: #fff !important;
-        }
         .btn-admin {
             background: linear-gradient(135deg, #FF6584, #FF4757) !important;
             color: #fff !important;
             padding: 8px 18px !important;
             border-radius: 50px !important;
             font-weight: 700 !important;
-            text-decoration: none !important;
+            transition: all 0.3s ease !important;
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
         }
         .btn-admin:hover {
             transform: translateY(-3px) scale(1.05) !important;
             box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
         }
-        #cart-link {
-            background: #6C63FF;
-            color: #fff !important;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none !important;
+        .btn-admin::after {
+            display: none !important;
         }
-        #cart-count {
-            background: #FF6584;
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.15);
+        }
+        .product-card .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #FF6584, #FF4757);
             color: #fff;
-            border-radius: 50%;
-            padding: 1px 9px;
-            font-size: 13px;
-            margin-right: 5px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 2;
         }
-
-        /* محصولات */
+        .product-card .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 15px;
+            background: #f5f7ff;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.02);
+        }
+        .product-card h3 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #2D3436;
+        }
+        .product-card .description {
+            color: #636E72;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .product-card .price {
+            font-size: 24px;
+            font-weight: 900;
+            color: #6C63FF;
+            margin: 15px 0;
+        }
+        .product-card .price span {
+            font-size: 14px;
+            font-weight: 400;
+            color: #636E72;
+        }
+        .btn-add {
+            background: linear-gradient(135deg, #2ECC71, #27ae60);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        .btn-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
+        }
+        .btn-add:active {
+            transform: scale(0.95);
+        }
         .products-section {
             max-width: 1200px;
             margin: 120px auto 60px;
@@ -124,100 +130,6 @@
             color: #636E72;
             font-size: 17px;
         }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .product-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 20px 18px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(108, 99, 255, 0.15);
-        }
-
-        .product-card .badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: linear-gradient(135deg, #FF6584, #FF4757);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 700;
-            z-index: 2;
-        }
-
-        .product-card .product-image {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 12px;
-            display: block;
-            margin-bottom: 12px;
-            background: #f5f7ff;
-            transition: all 0.3s ease;
-        }
-        .product-card:hover .product-image {
-            transform: scale(1.03);
-        }
-
-        .product-card h3 {
-            font-size: 17px;
-            font-weight: 700;
-            margin: 8px 0 4px;
-            color: #2D3436;
-        }
-        .product-card .description {
-            color: #636E72;
-            font-size: 13px;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        .product-card .price {
-            font-size: 22px;
-            font-weight: 900;
-            color: #6C63FF;
-            margin: 12px 0;
-        }
-        .product-card .price span {
-            font-size: 13px;
-            font-weight: 400;
-            color: #636E72;
-        }
-
-        .btn-add {
-            background: linear-gradient(135deg, #2ECC71, #27ae60);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-        }
-        .btn-add:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
-        }
-        .btn-add:active {
-            transform: scale(0.95);
-        }
-
         .custom-notification {
             position: fixed;
             bottom: 30px;
@@ -229,43 +141,20 @@
             border-radius: 15px;
             font-weight: 500;
             z-index: 9999;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             font-size: 16px;
             max-width: 90%;
             text-align: center;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
         }
-
-        /* فوتر */
-        footer {
-            background: #2D3436;
-            color: #fff;
-            padding: 35px 50px;
-            text-align: center;
-            margin-top: 60px;
-        }
-        footer p {
-            opacity: 0.7;
-            font-size: 14px;
-        }
-        .social {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 18px;
-        }
-        .social a {
-            color: #fff;
-            font-size: 22px;
-            opacity: 0.5;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-        .social a:hover {
-            opacity: 1;
-            transform: translateY(-3px);
-        }
-
         @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .product-card .product-image {
+                height: 150px;
+            }
             header {
                 padding: 0 15px;
                 height: 70px;
@@ -296,40 +185,16 @@
             .products-section {
                 margin: 100px auto 30px;
             }
-            .product-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-            .product-card .product-image {
-                height: 130px;
-            }
-            .product-card {
-                padding: 15px 12px;
-            }
-            .product-card h3 {
-                font-size: 15px;
-            }
-            .product-card .price {
-                font-size: 18px;
-            }
-            .btn-add {
-                font-size: 13px;
-                padding: 8px 15px;
-            }
-            footer {
-                padding: 25px 20px;
-            }
         }
-
         @media (max-width: 480px) {
             .product-grid {
                 grid-template-columns: 1fr;
             }
             .product-card .product-image {
-                height: 180px;
+                height: 200px;
             }
             .products-header h2 {
-                font-size: 24px;
+                font-size: 26px;
             }
             nav a {
                 font-size: 12px;
@@ -346,17 +211,10 @@
                 font-size: 12px;
                 padding: 4px 10px;
             }
-            .product-card .price {
-                font-size: 20px;
-            }
         }
     </style>
 </head>
 <body>
-
-    <!-- ============================================ -->
-    <!-- هدر                                          -->
-    <!-- ============================================ -->
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
@@ -368,9 +226,6 @@
         </nav>
     </header>
 
-    <!-- ============================================ -->
-    <!-- محصولات                                      -->
-    <!-- ============================================ -->
     <section class="products-section">
         <div class="products-header">
             <h2>🛍️ محصولات <span>بردخون عکس</span></h2>
@@ -381,9 +236,6 @@
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- فوتر                                         -->
-    <!-- ============================================ -->
     <footer>
         <div class="social">
             <a href="#">📱</a>
@@ -394,42 +246,39 @@
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
-    <!-- ============================================ -->
-    <!-- جاوااسکریپت - همه چیز در همین فایل          -->
-    <!-- ============================================ -->
     <script>
         // ============================================
         // لیست محصولات
         // ============================================
         const products = [
-            {
-                id: 1,
-                name: 'فلش مموری ۳۲ گیگ',
-                price: 6800000,
+            { 
+                id: 1, 
+                name: 'فلش مموری ۳۲ گیگ', 
+                price: 6800000, 
                 image: 'images/flash32.jpg',
                 description: 'سرعت بالا، مناسب برای ذخیره‌سازی عکس و فیلم',
                 badge: 'پرفروش'
             },
-            {
-                id: 2,
-                name: 'فلش مموری ۶۴ گیگ',
-                price: 8800000,
+            { 
+                id: 2, 
+                name: 'فلش مموری ۶۴ گیگ', 
+                price: 8800000, 
                 image: 'images/flash64.jpg',
                 description: 'ظرفیت بالا با سرعت فوق‌العاده',
                 badge: 'ویژه'
             },
-            {
-                id: 3,
-                name: 'قاب عکس ۲۱×۱۶',
-                price: 2600000,
+            { 
+                id: 3, 
+                name: 'قاب عکس ۲۱×۱۶', 
+                price: 2600000, 
                 image: 'images/frame1621.jpg',
                 description: 'قاب چوبی با کیفیت، مناسب برای عکس‌های ۶×۴',
                 badge: 'جدید'
             },
-            {
-                id: 4,
-                name: 'قاب عکس ۲۰×۳۰',
-                price: 3600000,
+            { 
+                id: 4, 
+                name: 'قاب عکس ۲۰×۳۰', 
+                price: 3600000, 
                 image: 'images/frame2030.jpg',
                 description: 'قاب مگنتی با طراحی مدرن',
                 badge: 'تخفیف'
@@ -437,7 +286,7 @@
         ];
 
         // ============================================
-        // سبد خرید
+        // مدیریت سبد خرید
         // ============================================
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -448,21 +297,19 @@
 
         function updateCartCount() {
             const count = cart.reduce((sum, item) => sum + item.qty, 0);
-            const el = document.getElementById('cart-count');
-            if (el) el.textContent = count;
+            document.querySelectorAll('#cart-count').forEach(el => {
+                if (el) el.textContent = count;
+            });
         }
 
         function getProductById(id) {
             return products.find(p => p.id === id);
         }
 
-        // ============================================
-        // نوتیفیکیشن
-        // ============================================
         function showNotification(message) {
             const old = document.querySelector('.custom-notification');
             if (old) old.remove();
-
+            
             const div = document.createElement('div');
             div.className = 'custom-notification';
             div.textContent = message;
@@ -470,45 +317,36 @@
             setTimeout(() => div.remove(), 3000);
         }
 
-        // ============================================
-        // ✅ افزودن به سبد خرید (تابع اصلی)
-        // ============================================
         function addToCart(productId) {
-            console.log('📦 کلیک شد - محصول:', productId);
-
             const product = getProductById(productId);
             if (!product) {
                 showNotification('❌ محصول یافت نشد!');
                 return;
             }
-
+            
             const existing = cart.find(item => item.id === productId);
             if (existing) {
                 existing.qty += 1;
             } else {
                 cart.push({ id: productId, qty: 1 });
             }
-
             saveCart();
-            showNotification('✅ ' + product.name + ' به سبد اضافه شد!');
+            showNotification(`✅ ${product.name} به سبد اضافه شد!`);
         }
 
-        // ============================================
-        // رندر محصولات
-        // ============================================
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             if (!grid) return;
-
+            
             let html = '';
-            products.forEach(function(p) {
+            products.forEach(p => {
                 html += `
                     <div class="product-card">
                         ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
                         <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.style.display='none'">
                         <h3>${p.name}</h3>
                         <p class="description">${p.description}</p>
-                        <div class="price">${p.price.toLocaleString()} <span>تومان</span></div>
+                        <div class="price">${p.price.toLocaleString()} <span>ریال</span></div>
                         <button class="btn-add" onclick="addToCart(${p.id})">
                             ➕ افزودن به سبد
                         </button>
@@ -518,15 +356,10 @@
             grid.innerHTML = html;
         }
 
-        // ============================================
-        // اجرا
-        // ============================================
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ صفحه بارگذاری شد');
             updateCartCount();
             renderProducts();
         });
     </script>
-
 </body>
 </html>
