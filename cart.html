@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سبد خرید - بردخون عکس</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .btn-admin {
+            background: linear-gradient(135deg, #FF6584, #FF4757) !important;
+            color: #fff !important;
+            padding: 8px 18px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
         }
-        body {
-            font-family: 'Tahoma', 'Vazir', sans-serif;
-            background: #f5f7ff;
-            direction: rtl;
-            min-height: 100vh;
+        .btn-admin:hover {
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
         }
-        
+        .btn-admin::after {
+            display: none !important;
+        }
         /* هدر */
         header {
             position: fixed;
@@ -70,19 +75,6 @@
             background: #6C63FF !important;
             color: #fff !important;
         }
-        .btn-admin {
-            background: linear-gradient(135deg, #FF6584, #FF4757) !important;
-            color: #fff !important;
-            padding: 8px 18px !important;
-            border-radius: 50px !important;
-            font-weight: 700 !important;
-            text-decoration: none !important;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3) !important;
-        }
-        .btn-admin:hover {
-            transform: translateY(-3px) scale(1.05) !important;
-            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4) !important;
-        }
         #cart-link {
             background: #6C63FF;
             color: #fff !important;
@@ -100,7 +92,6 @@
             margin-right: 5px;
         }
 
-        /* سبد خرید */
         .cart-section {
             max-width: 900px;
             margin: 120px auto 60px;
@@ -232,6 +223,7 @@
             color: #636E72;
             font-size: 14px;
         }
+
         .cart-buttons {
             display: flex;
             gap: 15px;
@@ -271,7 +263,6 @@
             box-shadow: 0 12px 40px rgba(231, 76, 60, 0.5);
         }
 
-        /* نوتیفیکیشن */
         .notification {
             position: fixed;
             bottom: 30px;
@@ -290,7 +281,6 @@
             background: #E74C3C;
         }
 
-        /* فوتر */
         footer {
             background: #2D3436;
             color: #fff;
@@ -319,35 +309,6 @@
             opacity: 1;
             transform: translateY(-3px);
         }
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 20px 0 25px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-        }
-        .badge-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .badge-item:hover {
-            transform: translateY(-5px);
-            filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.1));
-        }
-        .badge-item img {
-            height: 60px;
-            width: auto;
-            object-fit: contain;
-            background: #fff;
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
 
         @media (max-width: 768px) {
             header {
@@ -356,100 +317,33 @@
                 flex-wrap: wrap;
                 gap: 8px;
             }
-            .logo {
-                font-size: 20px;
-            }
-            nav {
-                gap: 10px;
-            }
-            nav a {
-                font-size: 13px;
-            }
-            #cart-link {
-                padding: 5px 12px;
-                font-size: 13px;
-            }
-            .btn-login {
-                padding: 5px 14px !important;
-                font-size: 13px !important;
-            }
-            .btn-admin {
-                padding: 5px 14px !important;
-                font-size: 13px !important;
-            }
-            #cart-total {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cart-buttons {
-                justify-content: center;
-                width: 100%;
-            }
-            #checkout-btn {
-                width: 100%;
-            }
-            .btn-clear-cart {
-                width: 100%;
-            }
-            .cart-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-            .cart-item .item-actions {
-                justify-content: space-between;
-            }
-            footer {
-                padding: 25px 20px;
-            }
-            .trust-badges {
-                gap: 15px;
-                padding: 10px;
-            }
-            .badge-item img {
-                height: 45px;
-                padding: 3px 8px;
-            }
+            .logo { font-size: 20px; }
+            nav { gap: 10px; }
+            nav a { font-size: 13px; }
+            .btn-login { padding: 5px 14px !important; font-size: 13px !important; }
+            .btn-admin { padding: 5px 14px !important; font-size: 13px !important; }
+            #cart-link { padding: 5px 12px; font-size: 13px; }
+            #cart-total { flex-direction: column; text-align: center; }
+            .cart-buttons { justify-content: center; width: 100%; }
+            #checkout-btn { width: 100%; }
+            .btn-clear-cart { width: 100%; }
+            .cart-item { flex-direction: column; align-items: stretch; gap: 10px; }
+            .cart-item .item-actions { justify-content: space-between; }
+            footer { padding: 25px 20px; }
         }
+
         @media (max-width: 480px) {
-            .trust-badges {
-                gap: 10px;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            .badge-item img {
-                height: 35px;
-                padding: 2px 5px;
-            }
-            nav a {
-                font-size: 12px;
-            }
-            #cart-link {
-                font-size: 12px;
-                padding: 4px 10px;
-            }
-            .btn-login {
-                font-size: 12px !important;
-                padding: 4px 12px !important;
-            }
-            .btn-admin {
-                font-size: 12px !important;
-                padding: 4px 12px !important;
-            }
-            .cart-header h2 {
-                font-size: 26px;
-            }
-            #cart-total .total-info h3 span {
-                font-size: 22px;
-            }
+            .cart-header h2 { font-size: 26px; }
+            #cart-total .total-info h3 span { font-size: 22px; }
+            nav a { font-size: 12px; }
+            .btn-login { font-size: 12px !important; padding: 4px 12px !important; }
+            .btn-admin { font-size: 12px !important; padding: 4px 12px !important; }
+            #cart-link { font-size: 12px; padding: 4px 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================ -->
-    <!-- هدر                                          -->
-    <!-- ============================================ -->
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
@@ -461,19 +355,14 @@
         </nav>
     </header>
 
-    <!-- ============================================ -->
-    <!-- سبد خرید                                     -->
-    <!-- ============================================ -->
     <section class="cart-section">
         <div class="cart-header">
             <h2>🛒 سبد خرید <span>بردخون عکس</span></h2>
         </div>
-        <div id="cart-items">
-            <!-- توسط جاوااسکریپت پر می‌شود -->
-        </div>
+        <div id="cart-items"></div>
         <div id="cart-total">
             <div class="total-info">
-                <h3>جمع کل: <span id="total-price">۰</span> تومان</h3>
+                <h3>جمع کل: <span id="total-price">۰</span> ریال</h3>
                 <p>هزینه ارسال در ادامه محاسبه می‌شود</p>
             </div>
             <div class="cart-buttons">
@@ -483,9 +372,6 @@
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- فوتر                                         -->
-    <!-- ============================================ -->
     <footer>
         <div class="social">
             <a href="#">📱</a>
@@ -493,23 +379,10 @@
             <a href="#">💬</a>
             <a href="#">📷</a>
         </div>
-        <div class="trust-badges">
-            <div class="badge-item">
-                <a href="https://trustseal.enamad.ir/?id=YOUR_CODE_HERE" target="_blank">
-                    <img src="https://trustseal.enamad.ir/logo.aspx?id=YOUR_CODE_HERE" alt="اینماد">
-                </a>
-            </div>
-        </div>
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
-    <!-- ============================================ -->
-    <!-- جاوااسکریپت                                   -->
-    <!-- ============================================ -->
     <script>
-        // ============================================
-        // لیست محصولات
-        // ============================================
         const products = [
             { id: 1, name: 'فلش مموری ۳۲ گیگ', price: 180000, image: '💾' },
             { id: 2, name: 'فلش مموری ۶۴ گیگ', price: 290000, image: '💿' },
@@ -517,9 +390,6 @@
             { id: 4, name: 'قاب عکس ۲۰×۳۰', price: 120000, image: '🖼️' }
         ];
 
-        // ============================================
-        // سبد خرید
-        // ============================================
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
@@ -539,13 +409,10 @@
             return products.find(p => p.id === id);
         }
 
-        // ============================================
-        // نوتیفیکیشن
-        // ============================================
         function showNotification(message, type = 'success') {
             const old = document.querySelector('.notification');
             if (old) old.remove();
-            
+
             const div = document.createElement('div');
             div.className = `notification ${type}`;
             div.textContent = message;
@@ -553,15 +420,12 @@
             setTimeout(() => div.remove(), 3000);
         }
 
-        // ============================================
-        // 🗑️ خالی کردن سبد خرید
-        // ============================================
         function clearCart() {
             if (cart.length === 0) {
                 showNotification('🛒 سبد خرید قبلاً خالی است!', 'error');
                 return;
             }
-            
+
             if (confirm('⚠️ آیا مطمئن هستید که می‌خواهید سبد خرید را خالی کنید؟')) {
                 cart = [];
                 saveCart();
@@ -570,9 +434,6 @@
             }
         }
 
-        // ============================================
-        // حذف و تغییر تعداد
-        // ============================================
         function removeFromCart(productId) {
             const product = getProductById(productId);
             cart = cart.filter(item => item.id !== productId);
@@ -594,15 +455,12 @@
             }
         }
 
-        // ============================================
-        // رندر سبد خرید
-        // ============================================
         function renderCart() {
             const container = document.getElementById('cart-items');
             const totalEl = document.getElementById('total-price');
-            
+
             if (!container) return;
-            
+
             if (cart.length === 0) {
                 container.innerHTML = `
                     <div style="text-align:center;padding:60px 20px;">
@@ -616,23 +474,23 @@
                 if (totalEl) totalEl.textContent = '۰';
                 return;
             }
-            
+
             let html = '';
             let total = 0;
-            
+
             cart.forEach(item => {
                 const product = getProductById(item.id);
                 if (!product) return;
                 const subtotal = product.price * item.qty;
                 total += subtotal;
-                
+
                 html += `
                     <div class="cart-item">
                         <div class="item-info">
                             <span class="item-image">${product.image}</span>
                             <div class="item-details">
                                 <div class="item-name">${product.name}</div>
-                                <div class="item-price">${subtotal.toLocaleString()} تومان</div>
+                                <div class="item-price">${subtotal.toLocaleString()} ریال</div>
                             </div>
                         </div>
                         <div class="item-actions">
@@ -646,11 +504,10 @@
                     </div>
                 `;
             });
-            
+
             container.innerHTML = html;
             if (totalEl) totalEl.textContent = total.toLocaleString();
-            
-            // دکمه پرداخت
+
             const checkoutBtn = document.getElementById('checkout-btn');
             if (checkoutBtn) {
                 checkoutBtn.onclick = () => {
@@ -669,9 +526,6 @@
             }
         }
 
-        // ============================================
-        // 🚀 اجرا
-        // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
             renderCart();
