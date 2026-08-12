@@ -954,4 +954,90 @@
             // پاک کردن فرم
             document.getElementById('new-product-name').value = '';
             document.getElementById('new-product-price').value = '';
-            document.getElementById('
+            document.getElementById('new-product-desc').value = '';
+            document.getElementById('new-product-image').value = '📦';
+            document.getElementById('new-product-badge').value = '';
+            document.getElementById('add-product-form').classList.remove('show');
+
+            showNotification(`✅ محصول "${name}" با موفقیت اضافه شد!`, 'success');
+        }
+
+        // ============================================
+        // 🔄 بروزرسانی همه
+        // ============================================
+        function refreshData() {
+            loadProductsFromStorage();
+            loadDashboard();
+            loadUsers();
+            loadProducts();
+            showNotification('✅ داده‌ها بروزرسانی شدند!', 'success');
+        }
+
+        // ============================================
+        // 📢 نوتیفیکیشن
+        // ============================================
+        function showNotification(message, type) {
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+
+            const div = document.createElement('div');
+            div.className = 'notification show';
+            div.textContent = message;
+            if (type === 'success') {
+                div.style.background = 'linear-gradient(135deg, #2ECC71, #27ae60)';
+            } else if (type === 'error') {
+                div.style.background = 'linear-gradient(135deg, #E74C3C, #c0392b)';
+            }
+            document.body.appendChild(div);
+
+            setTimeout(function() {
+                div.classList.remove('show');
+                setTimeout(function() { div.remove(); }, 500);
+            }, 3000);
+        }
+
+        // ============================================
+        // 🚀 اجرا
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductsFromStorage();
+
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').classList.remove('hidden');
+                loadData();
+
+                // تغییر دکمه ورود به خروج
+                const logoutBtn = document.createElement('button');
+                logoutBtn.className = 'btn-logout';
+                logoutBtn.textContent = '🚪 خروج';
+                logoutBtn.onclick = function() {
+                    if (confirm('آیا از خروج از پنل مدیریت مطمئن هستید؟')) {
+                        logoutAdmin();
+                    }
+                };
+
+                const nav = document.querySelector('nav');
+                const loginLink = nav.querySelector('.btn-login');
+                if (loginLink) {
+                    loginLink.replaceWith(logoutBtn);
+                }
+            }
+
+            document.getElementById('admin-password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkLogin();
+                }
+            });
+        });
+
+        // تابع کمکی برای بارگذاری اولیه
+        function loadData() {
+            loadDashboard();
+            loadUsers();
+            loadProducts();
+        }
+    </script>
+
+</body>
+</html>
