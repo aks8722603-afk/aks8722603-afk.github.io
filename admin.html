@@ -16,7 +16,6 @@
             direction: rtl;
             min-height: 100vh;
         }
-
         header {
             position: fixed;
             top: 0;
@@ -70,9 +69,6 @@
             color: #fff !important;
         }
 
-        /* ============================================ */
-        /* صفحه ورود به پنل مدیریت                      */
-        /* ============================================ */
         .admin-login {
             max-width: 400px;
             margin: 150px auto 60px;
@@ -178,9 +174,6 @@
             display: block;
         }
 
-        /* ============================================ */
-        /* پنل مدیریت                                   */
-        /* ============================================ */
         .admin-container {
             max-width: 1200px;
             margin: 100px auto 60px;
@@ -206,7 +199,6 @@
             background-clip: text;
         }
 
-        /* برگه‌ها */
         .admin-tabs {
             display: flex;
             gap: 10px;
@@ -241,7 +233,6 @@
             display: block;
         }
 
-        /* کارت‌های آمار */
         .stat-card {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -275,7 +266,6 @@
             margin-bottom: 5px;
         }
 
-        /* جدول‌ها */
         .table-wrap {
             overflow-x: auto;
             margin-top: 15px;
@@ -325,7 +315,6 @@
             margin-right: 5px;
         }
 
-        /* مدیریت محصولات */
         .product-item {
             display: flex;
             justify-content: space-between;
@@ -444,7 +433,6 @@
             flex-wrap: wrap;
         }
 
-        /* دکمه خروج در هدر */
         .btn-logout {
             background: #E74C3C !important;
             color: #fff !important;
@@ -507,63 +495,27 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                padding: 0 15px;
-                height: 70px;
-            }
-            .logo {
-                font-size: 20px;
-            }
-            nav {
-                gap: 10px;
-            }
-            nav a {
-                font-size: 13px;
-            }
-            .admin-box {
-                padding: 20px;
-            }
-            .admin-tabs button {
-                font-size: 13px;
-                padding: 8px 14px;
-            }
-            .stat-card {
-                grid-template-columns: 1fr 1fr;
-            }
-            .product-item .info {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .product-item .info .price-input {
-                width: 100%;
-            }
-            .add-product-form .row {
-                grid-template-columns: 1fr;
-            }
+            header { padding: 0 15px; height: 70px; }
+            .logo { font-size: 20px; }
+            nav { gap: 10px; }
+            nav a { font-size: 13px; }
+            .admin-box { padding: 20px; }
+            .admin-tabs button { font-size: 13px; padding: 8px 14px; }
+            .stat-card { grid-template-columns: 1fr 1fr; }
+            .product-item .info { flex-direction: column; align-items: stretch; }
+            .product-item .info .price-input { width: 100%; }
+            .add-product-form .row { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
-            .stat-card {
-                grid-template-columns: 1fr;
-            }
-            .admin-tabs {
-                flex-direction: column;
-            }
-            .admin-tabs button {
-                width: 100%;
-                text-align: center;
-            }
-            .admin-login {
-                padding: 25px 20px;
-                margin: 100px 15px 30px;
-            }
+            .stat-card { grid-template-columns: 1fr; }
+            .admin-tabs { flex-direction: column; }
+            .admin-tabs button { width: 100%; text-align: center; }
+            .admin-login { padding: 25px 20px; margin: 100px 15px 30px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================ -->
-    <!-- هدر                                          -->
-    <!-- ============================================ -->
     <header>
         <div class="logo">📸 بردخون عکس</div>
         <nav>
@@ -574,9 +526,6 @@
         </nav>
     </header>
 
-    <!-- ============================================ -->
-    <!-- صفحه ورود به پنل                             -->
-    <!-- ============================================ -->
     <div id="admin-login" class="admin-login">
         <span class="lock-icon">🔐</span>
         <h2>پنل مدیریت</h2>
@@ -586,23 +535,16 @@
         <div id="login-error" class="error-msg">❌ رمز عبور اشتباه است!</div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- پنل مدیریت                                   -->
-    <!-- ============================================ -->
     <div id="admin-panel" class="admin-container hidden">
         <div class="admin-box">
             <h2>📊 پنل مدیریت <span>بردخون عکس</span></h2>
 
-            <!-- برگه‌ها -->
             <div class="admin-tabs">
                 <button class="active" onclick="showTab('dashboard')">📊 داشبورد</button>
                 <button onclick="showTab('users')">👥 کاربران</button>
                 <button onclick="showTab('products')">🛍️ محصولات</button>
             </div>
 
-            <!-- ======================================== -->
-            <!-- برگه داشبورد                             -->
-            <!-- ======================================== -->
             <div id="tab-dashboard" class="tab-content active">
                 <div class="stat-card">
                     <div class="stat-item">
@@ -626,9 +568,6 @@
                 </div>
             </div>
 
-            <!-- ======================================== -->
-            <!-- برگه کاربران                             -->
-            <!-- ======================================== -->
             <div id="tab-users" class="tab-content">
                 <h3>👥 لیست کاربران <span class="badge-count" id="user-count-badge">۰</span></h3>
                 <div class="table-wrap">
@@ -641,9 +580,6 @@
                 </div>
             </div>
 
-            <!-- ======================================== -->
-            <!-- برگه محصولات                            -->
-            <!-- ======================================== -->
             <div id="tab-products" class="tab-content">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:20px;">
                     <h3>🛍️ مدیریت محصولات <span class="badge-count" id="product-count-badge">۰</span></h3>
@@ -652,7 +588,6 @@
                     </button>
                 </div>
 
-                <!-- فرم افزودن محصول -->
                 <div id="add-product-form" class="add-product-form">
                     <h4>➕ افزودن محصول جدید</h4>
                     <div class="form-group">
@@ -678,7 +613,6 @@
                     <button class="btn-primary btn-success" onclick="addNewProduct()" style="width:100%;">✅ افزودن محصول</button>
                 </div>
 
-                <!-- لیست محصولات -->
                 <div id="product-list-container">
                     <div class="empty-state">
                         <span class="big-icon">⏳</span>
@@ -687,7 +621,6 @@
                 </div>
             </div>
 
-            <!-- دکمه‌های خروج و بروزرسانی -->
             <div class="admin-actions">
                 <button class="btn-danger" onclick="logoutAdmin()" style="padding:10px 25px;">🚪 خروج از پنل</button>
                 <button class="btn-secondary" onclick="refreshData()">🔄 بروزرسانی</button>
@@ -699,9 +632,6 @@
         <p>© ۲۰۲۶ فروشگاه بردخون عکس - تمامی حقوق محفوظ است</p>
     </footer>
 
-    <!-- ============================================ -->
-    <!-- جاوااسکریپت                                  -->
-    <!-- ============================================ -->
     <script>
         // ============================================
         // 🔐 رمز عبور مدیریت
@@ -709,45 +639,57 @@
         const ADMIN_PASSWORD = 'admin123';
 
         // ============================================
-        // 📦 محصولات پیش‌فرض
+        // 📦 آدرس فایل products.json در گیت‌هاب
         // ============================================
-        const DEFAULT_PRODUCTS = [
-            { id: 1, name: 'فلش مموری ۱۶ گیگ', price: 6800000, image: '💾', description: 'سرعت بالا، مناسب برای ذخیره‌سازی عکس و فیلم',
-                badge: 'پرفروش' },
-            { id: 2, name: 'فلش مموری ۳۲ گیگ', price: 8800000, image: '💿', description: 'ظرفیت بالا با سرعت فوق‌العاده',
-                badge: 'ویژه' },
-            { id: 3, name: 'قاب عکس ۲۱×۱۶', price: 2600000, image: '🖼️', description: 'قاب پی وی سی با کیفیت', badge: 'جدید' },
-            { id: 4, name: 'قاب عکس ۲۰×۳۰', price: 3600000, image: '🖼️', description: 'قاب پی وی سی با کیفیت', badge: 'تخفیف' }
-        ];
+        const PRODUCTS_URL = 'https://bordekhon-aks.ir/products.json';
 
         // ============================================
-        // بارگذاری داده‌ها
+        // 📥 بارگذاری محصولات از فایل JSON
         // ============================================
         let products = [];
-        let orders = [];
 
-        function loadProductsFromStorage() {
-            const saved = localStorage.getItem('admin_products');
-            if (saved) {
-                products = JSON.parse(saved);
-            } else {
-                products = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-                localStorage.setItem('admin_products', JSON.stringify(products));
+        async function loadProductsFromGitHub() {
+            try {
+                const response = await fetch(PRODUCTS_URL + '?t=' + Date.now());
+                if (response.ok) {
+                    products = await response.json();
+                } else {
+                    products = getDefaultProducts();
+                }
+            } catch (error) {
+                products = getDefaultProducts();
             }
-            // هماهنگ با shop.html
-            localStorage.setItem('products', JSON.stringify(products));
             return products;
         }
 
-        function saveProductsToStorage() {
+        function getDefaultProducts() {
+            return [
+                { id: 1, name: 'فلش مموری ۱۶ گیگ', price: 6800000, image: '💾',
+                    description: 'سرعت بالا، مناسب برای ذخیره‌سازی عکس و فیلم', badge: 'پرفروش' },
+                { id: 2, name: 'فلش مموری ۳۲ گیگ', price: 8800000, image: '💿',
+                    description: 'ظرفیت بالا با سرعت فوق‌العاده', badge: 'ویژه' },
+                { id: 3, name: 'قاب عکس ۲۱×۱۶', price: 2600000, image: '🖼️',
+                    description: 'قاب پی وی سی با کیفیت', badge: 'جدید' },
+                { id: 4, name: 'قاب عکس ۲۰×۳۰', price: 3600000, image: '🖼️',
+                    description: 'قاب پی وی سی با کیفیت', badge: 'تخفیف' }
+            ];
+        }
+
+        // ============================================
+        // 💾 ذخیره محصولات در فایل JSON (از طریق گیت‌هاب API)
+        // ============================================
+        async function saveProductsToGitHub() {
+            // توجه: این روش نیاز به توکن گیت‌هاب دارد
+            // برای سادگی، فعلاً در localStorage ذخیره می‌کنیم
             localStorage.setItem('admin_products', JSON.stringify(products));
             localStorage.setItem('products', JSON.stringify(products));
+            showNotification('✅ محصولات ذخیره شدند! (در localStorage)', 'success');
         }
 
         // ============================================
         // 🔑 ورود
         // ============================================
-        function checkLogin() {
+        async function checkLogin() {
             const password = document.getElementById('admin-password').value;
             const errorEl = document.getElementById('login-error');
 
@@ -756,9 +698,11 @@
                 document.getElementById('admin-panel').classList.remove('hidden');
                 errorEl.classList.remove('show');
                 sessionStorage.setItem('adminLoggedIn', 'true');
+
+                // بارگذاری محصولات
+                await loadProductsFromGitHub();
                 loadData();
 
-                // تغییر دکمه ورود به خروج در هدر
                 const logoutBtn = document.createElement('button');
                 logoutBtn.className = 'btn-logout';
                 logoutBtn.textContent = '🚪 خروج';
@@ -767,7 +711,6 @@
                         logoutAdmin();
                     }
                 };
-
                 const nav = document.querySelector('nav');
                 const loginLink = nav.querySelector('.btn-login');
                 if (loginLink) {
@@ -781,7 +724,7 @@
         }
 
         // ============================================
-        // 🚪 خروج از پنل مدیریت
+        // 🚪 خروج
         // ============================================
         function logoutAdmin() {
             sessionStorage.removeItem('adminLoggedIn');
@@ -790,7 +733,6 @@
             document.getElementById('admin-password').value = '';
             document.getElementById('login-error').classList.remove('show');
 
-            // برگرداندن دکمه ورود به حالت اولیه
             const nav = document.querySelector('nav');
             const logoutBtn = nav.querySelector('.btn-logout');
             if (logoutBtn) {
@@ -800,8 +742,6 @@
                 loginLink.textContent = 'ورود / ثبت‌نام';
                 logoutBtn.replaceWith(loginLink);
             }
-
-            // هدایت به صفحه اصلی
             window.location.href = 'index.html';
         }
 
@@ -827,7 +767,7 @@
             const users = JSON.parse(localStorage.getItem('users')) || [];
             document.getElementById('total-users').textContent = users.length;
             document.getElementById('total-products').textContent = products.length;
-            orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
             document.getElementById('total-orders').textContent = orders.length;
             document.getElementById('last-update').textContent = new Date().toLocaleString('fa-IR');
         }
@@ -866,7 +806,6 @@
         // 🛍️ محصولات
         // ============================================
         function loadProducts() {
-            loadProductsFromStorage();
             document.getElementById('product-count-badge').textContent = products.length;
 
             const container = document.getElementById('product-list-container');
@@ -895,9 +834,9 @@
         }
 
         // ============================================
-        // 💰 تغییر قیمت محصول
+        // 💰 تغییر قیمت
         // ============================================
-        function updateProductPrice(productId) {
+        async function updateProductPrice(productId) {
             const input = document.getElementById('price-' + productId);
             const newPrice = parseInt(input.value);
             if (isNaN(newPrice) || newPrice < 0) {
@@ -907,7 +846,7 @@
             const product = products.find(p => p.id === productId);
             if (product) {
                 product.price = newPrice;
-                saveProductsToStorage();
+                await saveProductsToGitHub();
                 showNotification(`✅ قیمت ${product.name} به ${newPrice.toLocaleString()} ریال تغییر کرد!`, 'success');
             }
         }
@@ -915,26 +854,23 @@
         // ============================================
         // ❌ حذف محصول
         // ============================================
-        function deleteProduct(productId) {
+        async function deleteProduct(productId) {
             if (!confirm('آیا از حذف این محصول مطمئن هستید؟')) return;
             products = products.filter(p => p.id !== productId);
-            saveProductsToStorage();
+            await saveProductsToGitHub();
             loadProducts();
             showNotification('🗑️ محصول حذف شد!', 'success');
         }
 
         // ============================================
-        // ➕ نمایش/مخفی کردن فرم افزودن محصول
+        // ➕ افزودن محصول
         // ============================================
         function toggleAddProduct() {
             const form = document.getElementById('add-product-form');
             form.classList.toggle('show');
         }
 
-        // ============================================
-        // ➕ افزودن محصول جدید
-        // ============================================
-        function addNewProduct() {
+        async function addNewProduct() {
             const name = document.getElementById('new-product-name').value.trim();
             const price = parseInt(document.getElementById('new-product-price').value);
             const desc = document.getElementById('new-product-desc').value.trim();
@@ -948,96 +884,7 @@
 
             const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
             products.push({ id: newId, name, price, image, description: desc || 'توضیحی وارد نشده', badge });
-            saveProductsToStorage();
+            await saveProductsToGitHub();
             loadProducts();
 
-            // پاک کردن فرم
-            document.getElementById('new-product-name').value = '';
-            document.getElementById('new-product-price').value = '';
-            document.getElementById('new-product-desc').value = '';
-            document.getElementById('new-product-image').value = '📦';
-            document.getElementById('new-product-badge').value = '';
-            document.getElementById('add-product-form').classList.remove('show');
-
-            showNotification(`✅ محصول "${name}" با موفقیت اضافه شد!`, 'success');
-        }
-
-        // ============================================
-        // 🔄 بروزرسانی همه
-        // ============================================
-        function refreshData() {
-            loadProductsFromStorage();
-            loadDashboard();
-            loadUsers();
-            loadProducts();
-            showNotification('✅ داده‌ها بروزرسانی شدند!', 'success');
-        }
-
-        // ============================================
-        // 📢 نوتیفیکیشن
-        // ============================================
-        function showNotification(message, type) {
-            const existing = document.querySelector('.notification');
-            if (existing) existing.remove();
-
-            const div = document.createElement('div');
-            div.className = 'notification show';
-            div.textContent = message;
-            if (type === 'success') {
-                div.style.background = 'linear-gradient(135deg, #2ECC71, #27ae60)';
-            } else if (type === 'error') {
-                div.style.background = 'linear-gradient(135deg, #E74C3C, #c0392b)';
-            }
-            document.body.appendChild(div);
-
-            setTimeout(function() {
-                div.classList.remove('show');
-                setTimeout(function() { div.remove(); }, 500);
-            }, 3000);
-        }
-
-        // ============================================
-        // 🚀 اجرا
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            loadProductsFromStorage();
-
-            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                document.getElementById('admin-login').style.display = 'none';
-                document.getElementById('admin-panel').classList.remove('hidden');
-                loadData();
-
-                // تغییر دکمه ورود به خروج
-                const logoutBtn = document.createElement('button');
-                logoutBtn.className = 'btn-logout';
-                logoutBtn.textContent = '🚪 خروج';
-                logoutBtn.onclick = function() {
-                    if (confirm('آیا از خروج از پنل مدیریت مطمئن هستید؟')) {
-                        logoutAdmin();
-                    }
-                };
-
-                const nav = document.querySelector('nav');
-                const loginLink = nav.querySelector('.btn-login');
-                if (loginLink) {
-                    loginLink.replaceWith(logoutBtn);
-                }
-            }
-
-            document.getElementById('admin-password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkLogin();
-                }
-            });
-        });
-
-        // تابع کمکی برای بارگذاری اولیه
-        function loadData() {
-            loadDashboard();
-            loadUsers();
-            loadProducts();
-        }
-    </script>
-
-</body>
-</html>
+            document.getElementById('new-product
